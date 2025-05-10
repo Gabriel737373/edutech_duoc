@@ -1,5 +1,6 @@
 package com.edutech.services;
 
+import com.edutech.exceptions.AlumnoException;
 import com.edutech.models.Alumno;
 import com.edutech.repositories.AlumnoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,19 +14,35 @@ public class AlumnoServiceImpl implements AlumnoService{
     @Autowired
     private AlumnoRepository alumnoRepository;
 
+    // Listar todos los Alumnos
     @Override
     public List<Alumno> findAll(){ return this.alumnoRepository.findAll();}
 
+    // Buscar Alumnos por Id
     @Override
     public Alumno findById(Long id) {
         return this.alumnoRepository.findById(id).orElseThrow(
-                () -> new RuntimeException() //Crear alumnoexeption
-        )
+                () -> new AlumnoException("Alumno con id " +id+ " no encontrado")
+        );
     }
 
+    // Guardar Alumno
     @Override
     public Alumno save(Alumno alumno) {
-        return null;
+        return this.alumnoRepository.save(alumno);
     }
 
+    // Eliminar Alumno por Id
+    @Override
+    public void deleteById(Long id) {
+        alumnoRepository.deleteById(id);
+    }
+
+    // Actualizar Alumno por Id
+    @Override
+    public Alumno update(Long id, Alumno alumno) {
+        Alumno alumnoEncontrado = alumnoRepository.findById(id)
+                .orElseThrow(() -> new AlumnoException("Alumno con id "+id+" no encontrado"));
+        return alumnoRepository.save(alumnoEncontrado);
+    }
 }

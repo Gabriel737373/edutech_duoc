@@ -17,9 +17,9 @@ public class Alumno {
 
     @Column(nullable = false)
     @NotBlank(message = "El campo nombre alumno no puede ser vacio")
-    private String nombreC;
+    private String nombreCompleto;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     @NotBlank(message = "El campo correo alumno no puede ser vacio")
     private String correo;
 

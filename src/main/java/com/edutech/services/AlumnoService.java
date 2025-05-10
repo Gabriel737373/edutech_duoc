@@ -10,5 +10,6 @@ public interface AlumnoService {
     List<Alumno> findAll();
     Alumno findById(Long id);
     Alumno save (Alumno alumno);
-
+    void deleteById(Long id);
+    Alumno update(Long id, Alumno alumno);
 }
