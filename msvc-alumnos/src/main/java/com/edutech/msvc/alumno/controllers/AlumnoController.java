@@ -2,6 +2,7 @@ package com.edutech.msvc.alumno.controllers;
 
 
 
+import com.edutech.msvc.alumno.dtos.AlumnoDTO;
 import com.edutech.msvc.alumno.models.Alumno;
 import com.edutech.msvc.alumno.services.AlumnoService;
 import jakarta.validation.Valid;
@@ -34,14 +35,20 @@ public class AlumnoController {
     }
 
     @PostMapping
-    public ResponseEntity<Alumno> save(@Valid @RequestBody Alumno alumno){
-        Alumno saved = this.alumnoService.save(alumno);
+    public ResponseEntity<Alumno> save(@Valid @RequestBody AlumnoDTO alumnoDTO){
+        Alumno alumno = new Alumno();
+        alumno.setNombreCompleto(alumnoDTO.getNombreCompleto());
+        alumno.setCorreo(alumnoDTO.getCorreo());
+        Alumno saved = alumnoService.save(alumno);
         return ResponseEntity.status(HttpStatus.CREATED).body(saved);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Alumno> update(@PathVariable Long id, @Valid @RequestBody Alumno alumno){
-        Alumno updated = this.alumnoService.update(id, alumno);
+    public ResponseEntity<Alumno> update(@PathVariable Long id, @Valid @RequestBody AlumnoDTO alumnoDTO){
+        Alumno alumno = new Alumno();
+        alumno.setNombreCompleto(alumnoDTO.getNombreCompleto());
+        alumno.setCorreo(alumnoDTO.getCorreo());
+        Alumno updated = alumnoService.update(id, alumno);
         return ResponseEntity.status(HttpStatus.OK).body(updated);
     }
 
