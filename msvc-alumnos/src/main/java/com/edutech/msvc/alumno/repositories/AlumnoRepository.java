@@ -1,6 +1,7 @@
 package com.edutech.msvc.alumno.repositories;
 
-import com.edutech.models.Alumno;
+
+import com.edutech.msvc.alumno.models.Alumno;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

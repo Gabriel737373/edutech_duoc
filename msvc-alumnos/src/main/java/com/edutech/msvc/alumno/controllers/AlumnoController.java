@@ -1,7 +1,9 @@
 package com.edutech.msvc.alumno.controllers;
 
-import com.edutech.models.Alumno;
-import com.edutech.services.AlumnoService;
+
+
+import com.edutech.msvc.alumno.models.Alumno;
+import com.edutech.msvc.alumno.services.AlumnoService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

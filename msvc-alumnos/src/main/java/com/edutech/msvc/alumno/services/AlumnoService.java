@@ -1,7 +1,8 @@
 package com.edutech.msvc.alumno.services;
 
 
-import com.edutech.models.Alumno;
+
+import com.edutech.msvc.alumno.models.Alumno;
 
 import java.util.List;
 
