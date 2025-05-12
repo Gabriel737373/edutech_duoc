@@ -43,6 +43,8 @@ public class AlumnoServiceImpl implements AlumnoService{
     public Alumno update(Long id, Alumno alumno) {
         Alumno alumnoEncontrado = alumnoRepository.findById(id)
                 .orElseThrow(() -> new AlumnoException("Alumno con id "+id+" no encontrado"));
+        alumnoEncontrado.setNombreCompleto(alumno.getNombreCompleto());
+        alumnoEncontrado.setCorreo(alumno.getCorreo());
         return alumnoRepository.save(alumnoEncontrado);
     }
 }
