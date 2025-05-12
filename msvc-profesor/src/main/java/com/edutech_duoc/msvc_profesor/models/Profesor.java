@@ -29,7 +29,6 @@ public class Profesor {
 
     //¿Cómo hacer Sopaipillas?
     //Ingredientes
-    //Ingredientes
     //
     //
     //1 1/2 taza de zapallo cocido y molido.
