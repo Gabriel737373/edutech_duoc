@@ -1,4 +1,4 @@
-package com.edutech.services;
+package com.edutech.msvc.alumno.services;
 
 
 import com.edutech.models.Alumno;

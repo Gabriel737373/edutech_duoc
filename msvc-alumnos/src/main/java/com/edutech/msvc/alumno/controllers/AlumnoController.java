@@ -1,4 +1,4 @@
-package com.edutech.controllers;
+package com.edutech.msvc.alumno.controllers;
 
 import com.edutech.models.Alumno;
 import com.edutech.services.AlumnoService;
