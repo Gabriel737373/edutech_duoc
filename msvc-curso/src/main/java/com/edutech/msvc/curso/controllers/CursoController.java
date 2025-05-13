@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/v2/cursos")
+@RequestMapping("/api/v2/cursos")
 @Validated
 public class CursoController {
 
