@@ -18,6 +18,7 @@
         <module>msvc-alumnos</module>
         <module>msvc-curso</module>
         <module>msvc-profesor</module>
+        <module>msvc-reportes</module>
     </modules>
     <url/>
     <licenses>
