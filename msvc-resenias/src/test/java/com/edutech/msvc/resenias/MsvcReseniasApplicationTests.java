@@ -1,10 +1,10 @@
-package com.edutech.msvc.reportes;
+package com.edutech.msvc.resenias;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class MsvcReportesApplicationTests {
+class MsvcReseniasApplicationTests {
 
 	@Test
 	void contextLoads() {

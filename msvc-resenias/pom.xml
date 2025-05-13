@@ -7,11 +7,11 @@
 		<artifactId>edutech</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
-	<groupId>com.edutech.msvc.reportes</groupId>
-	<artifactId>msvc-reportes</artifactId>
+	<groupId>com.edutech.msvc.resenias</groupId>
+	<artifactId>msvc-resenias</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>msvc-reportes</name>
-	<description>msvc reportes edutech</description>
+	<name>msvc-resenias</name>
+	<description>Demo project for Spring Boot</description>
 	<url/>
 	<licenses>
 		<license/>
