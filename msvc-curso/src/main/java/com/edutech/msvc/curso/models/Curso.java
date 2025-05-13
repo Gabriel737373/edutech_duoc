@@ -1,6 +1,7 @@
 package com.edutech.msvc.curso.models;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
 @Entity
@@ -13,5 +14,18 @@ public class Curso {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_curso")
     private Long idCurso;
+
+    @Column(nullable = false)
+    @NotBlank(message = "El campo nombre curso no puede ser vacio")
+    private String nombreCurso;
+
+    @Column(nullable = false)
+    @NotBlank(message = "El campo descripcion curso no puede ser vacio")
+    private String descripcionCurso;
+
+    @Column(nullable = false)
+    @NotBlank(message = "El campo precio curso no puede ser vacio")
+    private Integer precioCurso;
+
 
 }
