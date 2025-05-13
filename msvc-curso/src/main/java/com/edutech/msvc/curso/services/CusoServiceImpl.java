@@ -16,7 +16,7 @@ public class CusoServiceImpl implements CursoService{
 
     // Listar todos los cursos
     @Override
-    public List<Curso> findAll(){ return (List<Curso>) this.cursoRepository.findAll();}
+    public List<Curso> findAll() { return cursoRepository.findAll();}
 
     // Buscar curso por Id
     @Override
