@@ -1,10 +1,10 @@
-package com.edutech.msvc.reportes;
+package com.edutech.msvc.reporte;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class MsvcReportesApplicationTests {
+class MsvcReporteApplicationTests {
 
 	@Test
 	void contextLoads() {
