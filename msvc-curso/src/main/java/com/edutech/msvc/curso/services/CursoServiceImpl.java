@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class CusoServiceImpl implements CursoService{
+public class CursoServiceImpl implements CursoService{
 
     @Autowired
     private CursoRepository cursoRepository;
