@@ -1,0 +1,14 @@
+package com.edutech_duoc.msvc_profesor.services;
+
+import com.edutech_duoc.msvc_profesor.models.Profesor;
+
+import java.util.List;
+
+public interface ProfesorService {
+
+    List<Profesor> findAll();
+    Profesor findById(Long id);
+    Profesor save (Profesor profesor);
+    void deleteByID(Long id);
+    Profesor update(Long id, Profesor profesor);
+}
