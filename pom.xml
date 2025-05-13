@@ -16,6 +16,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>msvc-alumnos</module>
+        <module>msvc-curso</module>
         <module>msvc-profesor</module>
     </modules>
     <url/>
