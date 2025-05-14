@@ -1,8 +1,10 @@
 package com.edutech.msvc.curso.exceptions;
 
 import com.edutech.msvc.curso.dtos.ErrorDTO;
+import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -40,6 +42,26 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(this.createErrorDTO(HttpStatus.BAD_REQUEST, new Date(), errorMap));
     }
+
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResponseEntity<ErrorDTO> handleHttpMessageNotReadable(HttpMessageNotReadableException ex) {
+        Map<String, String> errorMap = new HashMap<>();
+
+        Throwable mostSpecificCause = ex.getMostSpecificCause();
+        if (mostSpecificCause instanceof InvalidFormatException) {
+            InvalidFormatException ife = (InvalidFormatException) mostSpecificCause;
+            String field = ife.getPath().get(0).getFieldName();
+            String value = ife.getValue().toString();
+
+            errorMap.put(field, "El valor '" + value + "' no es válido para el campo '" + field + "'.");
+        } else {
+            errorMap.put("json", "El formato del JSON no es válido.");
+        }
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(this.createErrorDTO(HttpStatus.BAD_REQUEST, new Date(), errorMap));
+    }
+
 
     private ErrorDTO createErrorDTO(HttpStatus status, Date date, Map<String, String> errors) {
         ErrorDTO errorDTO = new ErrorDTO();
