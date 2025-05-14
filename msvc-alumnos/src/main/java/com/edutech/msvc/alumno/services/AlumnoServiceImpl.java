@@ -1,7 +1,7 @@
 package com.edutech.msvc.alumno.services;
 
 import com.edutech.msvc.alumno.exceptions.AlumnoException;
-import com.edutech.msvc.alumno.models.Alumno;
+import com.edutech.msvc.alumno.models.entities.Alumno;
 import com.edutech.msvc.alumno.repositories.AlumnoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

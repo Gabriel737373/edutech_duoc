@@ -3,7 +3,7 @@ package com.edutech.msvc.alumno.controllers;
 
 
 import com.edutech.msvc.alumno.dtos.AlumnoDTO;
-import com.edutech.msvc.alumno.models.Alumno;
+import com.edutech.msvc.alumno.models.entities.Alumno;
 import com.edutech.msvc.alumno.services.AlumnoService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
