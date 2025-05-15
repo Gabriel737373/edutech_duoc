@@ -8,7 +8,7 @@ import lombok.*;
 @Table(name="resenias")
 @Getter @Setter @ToString
 @NoArgsConstructor @AllArgsConstructor
-public class Resenias {
+public class Resenia {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
