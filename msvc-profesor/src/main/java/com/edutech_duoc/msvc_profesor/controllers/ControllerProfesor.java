@@ -51,7 +51,7 @@ public class ControllerProfesor {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Profesor> delete(@PathVariable Long id){
-        this.profesorService.deleteByID(id);
+        this.profesorService.deleteById(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 
     }

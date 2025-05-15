@@ -9,6 +9,6 @@ public interface ProfesorService {
     List<Profesor> findAll();
     Profesor findById(Long id);
     Profesor save (Profesor profesor);
-    void deleteByID(Long id);
+    void deleteById(Long id);
     Profesor update(Long id, Profesor profesor);
 }
