@@ -1,4 +1,4 @@
-package com.edutech.msvc.curso.models;
+package com.edutech.msvc.curso.models.entities;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;

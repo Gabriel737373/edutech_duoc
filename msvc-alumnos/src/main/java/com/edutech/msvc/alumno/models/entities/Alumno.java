@@ -1,4 +1,4 @@
-package com.edutech.msvc.alumno.models;
+package com.edutech.msvc.alumno.models.entities;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;

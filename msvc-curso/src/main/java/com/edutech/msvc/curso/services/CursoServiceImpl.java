@@ -1,7 +1,7 @@
 package com.edutech.msvc.curso.services;
 
 import com.edutech.msvc.curso.exceptions.CursoException;
-import com.edutech.msvc.curso.models.Curso;
+import com.edutech.msvc.curso.models.entities.Curso;
 import com.edutech.msvc.curso.repositories.CursoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

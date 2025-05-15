@@ -1,7 +1,7 @@
 package com.edutech.msvc.curso.controllers;
 
 import com.edutech.msvc.curso.dtos.CursoDTO;
-import com.edutech.msvc.curso.models.Curso;
+import com.edutech.msvc.curso.models.entities.Curso;
 import com.edutech.msvc.curso.services.CursoService;
 import com.edutech.msvc.curso.services.CursoServiceImpl;
 import jakarta.validation.Valid;
