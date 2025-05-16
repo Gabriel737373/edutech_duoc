@@ -21,4 +21,8 @@ public class Resenia {
     @Column(name = "valoracion_resenia")
     @NotNull(message = "El campo valoración reseña no puede estar vacío")
     private Integer valoricacionResenia;
+
+    @Column(name = "id_alumno")
+    @NotNull(message = "El campo id_alumno no puede estar vacío")
+    private Long idAlumno;
 }
