@@ -1,7 +1,7 @@
 package com.edutech_duoc.msvc_profesor.services;
 
 import com.edutech_duoc.msvc_profesor.exceptions.ProfesorException;
-import com.edutech_duoc.msvc_profesor.models.Profesor;
+import com.edutech_duoc.msvc_profesor.models.entities.Profesor;
 import com.edutech_duoc.msvc_profesor.repositories.ProfesorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -1,6 +1,6 @@
 package com.edutech_duoc.msvc_profesor.services;
 
-import com.edutech_duoc.msvc_profesor.models.Profesor;
+import com.edutech_duoc.msvc_profesor.models.entities.Profesor;
 
 import java.util.List;
 
