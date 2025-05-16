@@ -9,6 +9,6 @@ public class ReseniaDTO {
 
     private AlumnoDTO alumnoDTO;
     private String comentarioResenia;
-    private Integer valoricacionResenia;
+    private int valoricacionResenia;
 
 }
