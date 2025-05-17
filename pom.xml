@@ -20,6 +20,7 @@
         <module>msvc-profesor</module>
         <module>msvc-reporte</module>
         <module>msvc-resenias</module>
+        <module>msvc-evaluacion</module>
     </modules>
     <url/>
     <licenses>
