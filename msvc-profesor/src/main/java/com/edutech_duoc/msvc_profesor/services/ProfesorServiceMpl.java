@@ -42,7 +42,7 @@ public class ProfesorServiceMpl implements ProfesorService{
     @Override
     public Profesor update(Long id, Profesor profesor) {
         Profesor profesor1 = profesorRepository.findById(id)
-                .orElseThrow(() -> new ProfesorException("Profesor con id \"+id+\" no encontrado"));
+                .orElseThrow(() -> new ProfesorException("Profesor con id "+id+" no encontrado"));
         profesor1.setNombreProfesor(profesor.getNombreProfesor());
         profesor1.setApellidoProfesor(profesor.getApellidoProfesor());
         profesor1.setCorreoProfesor(profesor.getCorreoProfesor());

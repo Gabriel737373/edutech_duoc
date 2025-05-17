@@ -26,6 +26,7 @@ public class ControllerProfesor {
     public ResponseEntity<List<Profesor>> findAll(){
         List<Profesor> profesores = this.profesorService.findAll();
         return ResponseEntity.status(HttpStatus.OK).body(profesores);
+
     }
 
     @GetMapping("/{id}")
@@ -47,6 +48,7 @@ public class ControllerProfesor {
         profesor.setCorreoProfesor(profesorDTO.getCorreoProfesor());
         Profesor updated = profesorService.update(id, profesor);
         return ResponseEntity.status(HttpStatus.OK).body(updated);
+
     }
 
     @DeleteMapping("/{id}")

@@ -1,6 +1,6 @@
-package com.edutech_duoc.msvc_profesor.exceptions;
+package com.edutech.msvc.evaluacion.exceptions;
 
-import com.edutech_duoc.msvc_profesor.dtos.ErrorDTO;
+import com.edutech.msvc.evaluacion.dtos.ErrorDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -15,20 +15,18 @@ import java.util.Map;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(ProfesorException.class)
-    public ResponseEntity<ErrorDTO> handProfesorException(ProfesorException exception){
+    @ExceptionHandler(EvaluacionException.class)
+    public ResponseEntity<ErrorDTO> handEvaluacionException(EvaluacionException exception){
 
-        if (exception.getMessage().contains("No se encuentra al profesor")){
-
-            Map<String, String> errorMap = Collections.singletonMap("Profesor no encontrado", exception.getMessage());
+        if (exception.getMessage().contains("No se encuentra la evaluacion")){
+            Map<String, String> errorMap = Collections.singletonMap("Evaluacion no encontrada", exception.getMessage());
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body(this.createErrorDTO(HttpStatus.NOT_FOUND, new Date(), errorMap));
         } else {
-            Map<String, String> errorMap = Collections.singletonMap("Profesor existente", exception.getMessage());
+            Map<String, String> errorMap = Collections.singletonMap("Evaluacion encontrada", exception.getMessage());
             return ResponseEntity.status(HttpStatus.CONFLICT)
                     .body(this.createErrorDTO(HttpStatus.CONFLICT, new Date(), errorMap));
         }
-
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
@@ -39,6 +37,7 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(this.createErrorDTO(HttpStatus.BAD_REQUEST, new Date(), errorMap));
     }
+
 
     private ErrorDTO createErrorDTO(HttpStatus status, Date date, Map<String, String> errors) {
         ErrorDTO errorDTO = new ErrorDTO();

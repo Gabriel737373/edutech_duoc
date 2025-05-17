@@ -1,4 +1,4 @@
-package com.edutech_duoc.msvc_profesor.dtos;
+package com.edutech.msvc.evaluacion.dtos;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -6,19 +6,18 @@ import lombok.Setter;
 import java.util.Date;
 import java.util.Map;
 
-@Getter@Setter
+@Getter @Setter
 public class ErrorDTO {
-    private Integer status ;
+    private Integer status;
     private Date date;
     private Map<String, String> errors;
 
     @Override
-    public String toString() {
+    public String toString(){
         return "{" +
                 "status=" + status +
                 ", date=" + date +
                 ", errors=" + errors +
                 '}';
     }
-
 }
