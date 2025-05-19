@@ -17,7 +17,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/profesores")
 @Validated
-public class ControllerProfesor {
+public class ProfesorController {
 
     @Autowired
     private ProfesorService profesorService;
