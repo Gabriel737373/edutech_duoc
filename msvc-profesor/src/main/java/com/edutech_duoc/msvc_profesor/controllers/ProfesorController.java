@@ -1,7 +1,5 @@
 package com.edutech_duoc.msvc_profesor.controllers;
 
-
-
 import com.edutech_duoc.msvc_profesor.dtos.ProfesorDTO;
 import com.edutech_duoc.msvc_profesor.models.entities.Profesor;
 import com.edutech_duoc.msvc_profesor.services.ProfesorService;
