@@ -26,7 +26,7 @@ public class ProfesorController {
         return ResponseEntity.status(HttpStatus.OK).body(profesores);
 
     }
-
+    //GUARDAR
     @GetMapping("/{id}")
     public ResponseEntity<Profesor> save(@Valid @RequestBody ProfesorDTO profesorDTO){
         Profesor profesor = new Profesor();
@@ -37,7 +37,7 @@ public class ProfesorController {
         return ResponseEntity.status(HttpStatus.CREATED).body(saved);
 
     }
-
+    //ACTUALIZAR
     @PostMapping("/{id}")
     public ResponseEntity<Profesor> update(@PathVariable Long id, @Valid @RequestBody ProfesorDTO profesorDTO) {
         Profesor profesor = new Profesor();
@@ -48,7 +48,7 @@ public class ProfesorController {
         return ResponseEntity.status(HttpStatus.OK).body(updated);
 
     }
-
+    //ELIMINAR
     @DeleteMapping("/{id}")
     public ResponseEntity<Profesor> delete(@PathVariable Long id){
         this.profesorService.deleteById(id);
