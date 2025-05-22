@@ -37,10 +37,24 @@ public class ReseniaController {
 
     //Metodo para filtrar reseñias hechas por un alumno
 
-    @GetMapping("/paciente/{id}")
+    @GetMapping("/alumno/{id}")
     public ResponseEntity<List<Resenia>> findByIdAlumno(@PathVariable Long id){
         return ResponseEntity.status(HttpStatus.OK).body(this.reseniaService.findByAlumnoId(id));
     }
 
+    @DeleteMapping
+    public ResponseEntity<Resenia> delete(@PathVariable Long id){
+        this.reseniaService.deleteById(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Resenia> update(@PathVariable Long id, @Valid @RequestBody ReseniaDTO reseniaDTO){
+        Resenia resenia=new Resenia();
+        resenia.setValoracionResenia(reseniaDTO.getValoricacionResenia());
+        resenia.setComentarioResenia(reseniaDTO.getComentarioResenia());
+        Resenia updated=reseniaService.update(id,resenia);
+        return ResponseEntity.status(HttpStatus.OK).body(updated);
+    }
 
 }

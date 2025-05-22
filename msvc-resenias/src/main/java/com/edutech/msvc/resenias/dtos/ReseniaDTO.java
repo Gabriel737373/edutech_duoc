@@ -1,6 +1,5 @@
 package com.edutech.msvc.resenias.dtos;
 
-import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
 @Getter @Setter

@@ -19,7 +19,6 @@ public class ReseniaServiceImpl implements ReseniaService {
     @Autowired
     private ReseniaRepository reseniaRepository;
 
-    //ERROR NO SÉ POR QUÉ
     @Autowired
     private AlumnoClientRest alumnoClientRest;
 
@@ -30,7 +29,6 @@ public class ReseniaServiceImpl implements ReseniaService {
         );
     }
 
-    //DESARROLLAR MÉTODOS
     @Override
     public Resenia save(Resenia resenia) {
         try{
@@ -64,5 +62,19 @@ public class ReseniaServiceImpl implements ReseniaService {
             reseniaDTO.setAlumnoDTO(alumnoDTO);
             return reseniaDTO;
         }).toList();
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        reseniaRepository.deleteById(id);
+    }
+
+    @Override
+    public Resenia update(Long id, Resenia resenia) {
+        Resenia reseniaFind=reseniaRepository.findById(id).orElseThrow(
+                ()->new ReseniaException("Reseña con ID: "+id+" no encontrada"));
+        reseniaFind.setComentarioResenia(resenia.getComentarioResenia());
+        reseniaFind.setValoracionResenia(resenia.getValoracionResenia());
+        return reseniaRepository.save(reseniaFind);
     }
 }
