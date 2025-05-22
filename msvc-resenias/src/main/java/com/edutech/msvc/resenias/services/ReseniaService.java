@@ -10,7 +10,7 @@ public interface ReseniaService {
     Resenia findById(Long id);
     Resenia save(Resenia resenia);
     List<Resenia> findByAlumnoId(Long alumnoId);   //REVISAR EN POSTMAN POR EL ARGUMENTO
-    List<ReseniaDTO> findAll();
+    List<Resenia> findAll();
     void deleteById(Long id);
     Resenia update(Long id, Resenia resenia);
 

@@ -21,8 +21,9 @@ public class ReseniaController {
     private ReseniaService reseniaService;
 
     @GetMapping
-    public ResponseEntity<List<ReseniaDTO>> findAll(){
-        return ResponseEntity.status(HttpStatus.OK).body(this.reseniaService.findAll());
+    public ResponseEntity<List<Resenia>> findAll(){
+        List<Resenia> resenias=this.reseniaService.findAll();
+        return ResponseEntity.status(HttpStatus.OK).body(resenias);
     }
 
     @GetMapping("/{id}")
@@ -42,7 +43,7 @@ public class ReseniaController {
         return ResponseEntity.status(HttpStatus.OK).body(this.reseniaService.findByAlumnoId(id));
     }
 
-    @DeleteMapping
+    @DeleteMapping("/{id}")
     public ResponseEntity<Resenia> delete(@PathVariable Long id){
         this.reseniaService.deleteById(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();

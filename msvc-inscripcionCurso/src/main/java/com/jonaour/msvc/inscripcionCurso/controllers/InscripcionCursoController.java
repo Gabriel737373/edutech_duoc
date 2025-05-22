@@ -51,7 +51,7 @@ public class InscripcionCursoController {
     }
 
     //Metodo filtrar inscripcion de un curso
-    @GetMapping("/profesor/{id}")
+    @GetMapping("/curso/{id}")
     public ResponseEntity<List<InscripcionCurso>> findbyIdCurso(@PathVariable Long id){
         return ResponseEntity.status(HttpStatus.OK).body(this.inscripcionCursoService.findbyCursoId(id));
     }

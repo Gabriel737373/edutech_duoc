@@ -44,6 +44,14 @@ public class ReseniaServiceImpl implements ReseniaService {
         return this.reseniaRepository.findByIdAlumno(alumnoId);
     }
 
+
+    @Override
+    public List<Resenia> findAll() {
+        return this.reseniaRepository.findAll();
+    }
+
+    //Metodo inactivo
+    /*
     @Override
     public List<ReseniaDTO> findAll() {
         return this.reseniaRepository.findAll().stream().map(resenia -> {
@@ -63,6 +71,7 @@ public class ReseniaServiceImpl implements ReseniaService {
             return reseniaDTO;
         }).toList();
     }
+    */
 
     @Override
     public void deleteById(Long id) {
