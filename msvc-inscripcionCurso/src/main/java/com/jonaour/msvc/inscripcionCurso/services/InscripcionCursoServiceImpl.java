@@ -1,12 +1,15 @@
 package com.jonaour.msvc.inscripcionCurso.services;
 
 import com.jonaour.msvc.inscripcionCurso.clients.AlumnoClientRest;
+import com.jonaour.msvc.inscripcionCurso.clients.CursoClientRest;
 import com.jonaour.msvc.inscripcionCurso.clients.ProfesorClientRest;
 import com.jonaour.msvc.inscripcionCurso.dtos.AlumnoDTO;
+import com.jonaour.msvc.inscripcionCurso.dtos.CursoDTO;
 import com.jonaour.msvc.inscripcionCurso.dtos.InscripcionCursoDTO;
 import com.jonaour.msvc.inscripcionCurso.dtos.ProfesorDTO;
 import com.jonaour.msvc.inscripcionCurso.exceptions.InscripcionCursoException;
 import com.jonaour.msvc.inscripcionCurso.models.Alumno;
+import com.jonaour.msvc.inscripcionCurso.models.Curso;
 import com.jonaour.msvc.inscripcionCurso.models.Profesor;
 import com.jonaour.msvc.inscripcionCurso.models.entities.InscripcionCurso;
 import com.jonaour.msvc.inscripcionCurso.repositories.InscripcionCursoRepository;
@@ -28,6 +31,9 @@ public class InscripcionCursoServiceImpl implements InscripcionCursoService{
     @Autowired
     private InscripcionCursoRepository inscripcionCursoRepository;
 
+    @Autowired
+    private CursoClientRest cursoClientRest;
+
     @Override
     public InscripcionCurso findById(Long id) {
         return this.inscripcionCursoRepository.findById(id).orElseThrow(
@@ -40,6 +46,7 @@ public class InscripcionCursoServiceImpl implements InscripcionCursoService{
         try{
             Alumno alumno=this.alumnoClientRest.findById(inscripcionCurso.getIdAlumno());
             Profesor profesor=this.profesorClientRest.findById(inscripcionCurso.getIdProfesor());
+            Curso curso=this.cursoClientRest.findById(inscripcionCurso.getIdCurso());
         }catch (FeignException ex){
             throw new InscripcionCursoException("Existen problemas al asociar alumno-profesor-curso");
         }
@@ -57,8 +64,14 @@ public class InscripcionCursoServiceImpl implements InscripcionCursoService{
     }
 
     @Override
+    public List<InscripcionCurso> findbyCursoId(Long cursoId) {
+        return this.inscripcionCursoRepository.findByIdCurso(cursoId);
+    }
+
+    @Override
     public List<InscripcionCursoDTO> findAll() {
         return this.inscripcionCursoRepository.findAll().stream().map(inscripcionCurso -> {
+
             Alumno alumno=null;
             try{
                 alumno=this.alumnoClientRest.findById(inscripcionCurso.getIdAlumno());
@@ -73,6 +86,13 @@ public class InscripcionCursoServiceImpl implements InscripcionCursoService{
                 throw new InscripcionCursoException("El profesor buscado no existe");
             }
 
+            Curso curso=null;
+            try {
+                curso=this.cursoClientRest.findById(inscripcionCurso.getIdCurso());
+            }catch (FeignException ex){
+                throw new InscripcionCursoException("El curso buscado no existe");
+            }
+
             AlumnoDTO alumnoDTO=new AlumnoDTO();
             alumnoDTO.setCorreo(alumno.getCorreo());
             alumnoDTO.setNombreCompleto(alumno.getNombreCompleto());
@@ -82,9 +102,15 @@ public class InscripcionCursoServiceImpl implements InscripcionCursoService{
             profesorDTO.setApellidoProfesor(profesor.getApellidoProfesor());
             profesorDTO.setCorreoProfesor(profesor.getCorreoProfesor());
 
+            CursoDTO cursoDTO=new CursoDTO();
+            cursoDTO.setPrecioCurso(curso.getPrecioCurso());
+            cursoDTO.setNombreCurso(curso.getNombreCurso());
+            cursoDTO.setDescripcionCurso(curso.getDescripcionCurso());
+
             InscripcionCursoDTO inscripcionCursoDTO=new InscripcionCursoDTO();
             inscripcionCursoDTO.setAlumno(alumnoDTO);
             inscripcionCursoDTO.setProfesor(profesorDTO);
+            inscripcionCursoDTO.setCurso(cursoDTO);
             return inscripcionCursoDTO;
 
         }).toList();
@@ -103,6 +129,7 @@ public class InscripcionCursoServiceImpl implements InscripcionCursoService{
         inscripcionCursoFind.setFechaInscripcion(inscripcionCurso.getFechaInscripcion());
         inscripcionCursoFind.setIdProfesor(inscripcionCurso.getIdProfesor());
         inscripcionCursoFind.setIdAlumno(inscripcionCurso.getIdAlumno());
+        inscripcionCursoFind.setIdCurso(inscripcionCurso.getIdCurso());
         return inscripcionCursoRepository.save(inscripcionCursoFind);
     }
 }

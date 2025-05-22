@@ -11,6 +11,7 @@ public interface InscripcionCursoService {
     InscripcionCurso save(InscripcionCurso inscripcionCurso);
     List<InscripcionCurso> findbyAlumnoId(Long alumnoId); //REVISAR EN POST MAN POR EL ARGUMENTO
     List<InscripcionCurso> findbyProfesorId(Long profesorId); //REVISAR EN POST MAN POR EL ARGUMENTO
+    List<InscripcionCurso> findbyCursoId(Long cursoId); //REVISAR EN POST MAN POR EL ARGUMENTO
     List<InscripcionCursoDTO> findAll();
     void deleteById(Long id);
     InscripcionCurso update(Long id, InscripcionCurso inscripcionCurso);

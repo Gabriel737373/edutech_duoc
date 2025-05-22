@@ -10,4 +10,5 @@ import java.util.List;
 public interface InscripcionCursoRepository extends JpaRepository<InscripcionCurso,Long> {
     List<InscripcionCurso> findByIdAlumno(Long idAlumno);
     List<InscripcionCurso> findByIdProfesor(Long idProfesor);
+    List<InscripcionCurso> findByIdCurso(Long idCurso);
 }

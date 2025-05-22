@@ -9,6 +9,7 @@ import java.util.Date;
 public class InscripcionCursoDTO {
     private AlumnoDTO alumno;
     private ProfesorDTO profesor;
+    private CursoDTO curso;
     private Date fechaInscripcion;
     private float costoInscripcion;
 }

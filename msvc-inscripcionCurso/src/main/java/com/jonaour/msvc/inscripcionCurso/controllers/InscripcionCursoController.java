@@ -50,6 +50,12 @@ public class InscripcionCursoController {
         return ResponseEntity.status(HttpStatus.OK).body(this.inscripcionCursoService.findbyProfesorId(id));
     }
 
+    //Metodo filtrar inscripcion de un curso
+    @GetMapping("/profesor/{id}")
+    public ResponseEntity<List<InscripcionCurso>> findbyIdCurso(@PathVariable Long id){
+        return ResponseEntity.status(HttpStatus.OK).body(this.inscripcionCursoService.findbyCursoId(id));
+    }
+
     //Metodo para eliminar una inscripcion
     @DeleteMapping("/{id}")
     public ResponseEntity<InscripcionCurso> delete(@PathVariable Long id){
