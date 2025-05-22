@@ -21,6 +21,7 @@
         <module>msvc-reporte</module>
         <module>msvc-resenias</module>
         <module>msvc-evaluacion</module>
+        <module>msvc-inscripcionCurso</module>
     </modules>
     <url/>
     <licenses>
