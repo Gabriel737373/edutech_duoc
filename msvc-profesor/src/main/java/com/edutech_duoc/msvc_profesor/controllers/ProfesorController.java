@@ -36,7 +36,7 @@ public class ProfesorController {
     //}
 
     //GUARDAR
-    @PostMapping("/{id}")
+    @PostMapping()
     public ResponseEntity<Profesor> save(@Valid @RequestBody ProfesorDTO profesorDTO){
         Profesor profesor = new Profesor();
         profesor.setNombreProfesor(profesorDTO.getNombreProfesor());
