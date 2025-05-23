@@ -21,6 +21,7 @@ public class ProfesorController {
     @Autowired
     private ProfesorService profesorService;
 
+    //LISTAR TODOS
     @GetMapping
     public ResponseEntity<List<Profesor>> findAll(){
         List<Profesor> profesores = this.profesorService.findAll();
@@ -28,11 +29,12 @@ public class ProfesorController {
 
     }
 
-    @GetMapping
-    public ResponseEntity<Profesor> findById(@PathVariable Long Id){
-        Profesor profesor = this.profesorService.findById(Id);
-        return ResponseEntity.status(HttpStatus.OK).body(profesor);
-    }
+    //@GetMapping
+    //public ResponseEntity<Profesor> findById(@PathVariable Long Id){
+    //    Profesor profesor = this.profesorService.findById(Id);
+    //    return ResponseEntity.status(HttpStatus.OK).body(profesor);
+    //}
+
     //GUARDAR
     @PostMapping("/{id}")
     public ResponseEntity<Profesor> save(@Valid @RequestBody ProfesorDTO profesorDTO){
@@ -42,8 +44,8 @@ public class ProfesorController {
         profesor.setCorreoProfesor(profesorDTO.getCorreoProfesor());
         Profesor saved = profesorService.save(profesor);
         return ResponseEntity.status(HttpStatus.CREATED).body(saved);
-
     }
+
     //ACTUALIZAR
     @PutMapping("/{id}")
     public ResponseEntity<Profesor> update(@PathVariable Long id, @Valid @RequestBody ProfesorDTO profesorDTO) {
@@ -53,13 +55,12 @@ public class ProfesorController {
         profesor.setCorreoProfesor(profesorDTO.getCorreoProfesor());
         Profesor updated = profesorService.update(id, profesor);
         return ResponseEntity.status(HttpStatus.OK).body(updated);
-
     }
+
     //ELIMINAR
     @DeleteMapping("/{id}")
     public ResponseEntity<Profesor> delete(@PathVariable Long id){
         this.profesorService.deleteById(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-
     }
 }
