@@ -3,6 +3,7 @@ package com.edutech_duoc.msvc_profesor.controllers;
 import com.edutech_duoc.msvc_profesor.dtos.ProfesorDTO;
 import com.edutech_duoc.msvc_profesor.models.entities.Profesor;
 import com.edutech_duoc.msvc_profesor.services.ProfesorService;
+import jakarta.persistence.Id;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -26,8 +27,14 @@ public class ProfesorController {
         return ResponseEntity.status(HttpStatus.OK).body(profesores);
 
     }
+
+    @GetMapping
+    public ResponseEntity<Profesor> findById(@PathVariable Long Id){
+        Profesor profesor = this.profesorService.findById(Id);
+        return ResponseEntity.status(HttpStatus.OK).body(profesor);
+    }
     //GUARDAR
-    @GetMapping("/{id}")
+    @PostMapping("/{id}")
     public ResponseEntity<Profesor> save(@Valid @RequestBody ProfesorDTO profesorDTO){
         Profesor profesor = new Profesor();
         profesor.setNombreProfesor(profesorDTO.getNombreProfesor());
@@ -38,7 +45,7 @@ public class ProfesorController {
 
     }
     //ACTUALIZAR
-    @PostMapping("/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<Profesor> update(@PathVariable Long id, @Valid @RequestBody ProfesorDTO profesorDTO) {
         Profesor profesor = new Profesor();
         profesor.setNombreProfesor(profesorDTO.getNombreProfesor());
