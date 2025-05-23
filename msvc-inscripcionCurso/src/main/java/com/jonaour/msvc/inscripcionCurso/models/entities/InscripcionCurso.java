@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "inscripcionCursos")
@@ -18,7 +18,7 @@ public class InscripcionCurso {
     private Long idInscripcionCurso;
 
     @Column(name = "fecha_inscripcion")
-    private LocalDateTime fechaInscripcion;   //VERIFICAR DSP EN POSTMAN SI FUNCIONA BIEN
+    private LocalDate fechaInscripcion;   //VERIFICAR DSP EN POSTMAN SI FUNCIONA BIEN
 
     @Column(name = "costo_inscripcion")
     private float costoInscripcion;
