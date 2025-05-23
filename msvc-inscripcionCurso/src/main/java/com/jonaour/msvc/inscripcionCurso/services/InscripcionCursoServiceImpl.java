@@ -43,12 +43,22 @@ public class InscripcionCursoServiceImpl implements InscripcionCursoService{
 
     @Override
     public InscripcionCurso save(InscripcionCurso inscripcionCurso) {
-        try{
-            Alumno alumno=this.alumnoClientRest.findById(inscripcionCurso.getIdAlumno());
-            Profesor profesor=this.profesorClientRest.findById(inscripcionCurso.getIdProfesor());
-            Curso curso=this.cursoClientRest.findById(inscripcionCurso.getIdCurso());
-        }catch (FeignException ex){
-            throw new InscripcionCursoException("Existen problemas al asociar alumno-profesor-curso");
+        try {
+            alumnoClientRest.findById(inscripcionCurso.getIdAlumno());
+        } catch (FeignException ex) {
+            throw new InscripcionCursoException("El alumno no se encuentra en la base de datos");
+        }
+
+        try {
+            profesorClientRest.findById(inscripcionCurso.getIdProfesor());
+        } catch (FeignException ex) {
+            throw new InscripcionCursoException("El profesor no se encuentra en la base de datos");
+        }
+
+        try {
+            cursoClientRest.findById(inscripcionCurso.getIdCurso());
+        } catch (FeignException ex) {
+            throw new InscripcionCursoException("El curso no se encuentra en la base de datos");
         }
         return this.inscripcionCursoRepository.save(inscripcionCurso);
     }
