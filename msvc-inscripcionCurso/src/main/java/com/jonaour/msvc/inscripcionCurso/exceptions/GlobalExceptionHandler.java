@@ -15,7 +15,7 @@ import java.util.Map;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
     @ExceptionHandler(InscripcionCursoException.class)
-    public ResponseEntity<ErrorDTO> handleAlumnoException(InscripcionCursoException exception) {
+    public ResponseEntity<ErrorDTO> handleInscripcionCursoException(InscripcionCursoException exception) {
 
         if (exception.getMessage().contains("no se encuentra en la base de datos")) {
             Map<String, String> errorMap = Collections.singletonMap("Inscripcion curso no encontrada", exception.getMessage());
