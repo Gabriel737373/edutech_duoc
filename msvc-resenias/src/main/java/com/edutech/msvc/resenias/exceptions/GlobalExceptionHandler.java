@@ -16,7 +16,7 @@ import java.util.Map;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(ReseniaException.class)
-    public ResponseEntity<ErrorDTO> handleAlumnoException(ReseniaException exception) {
+    public ResponseEntity<ErrorDTO> handleReseniaException(ReseniaException exception) {
 
         if (exception.getMessage().contains("no se encuentra en la base de datos")) {
             Map<String, String> errorMap = Collections.singletonMap("Reseña no encontrado", exception.getMessage());
