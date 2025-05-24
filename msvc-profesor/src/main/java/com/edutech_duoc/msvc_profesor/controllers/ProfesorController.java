@@ -29,11 +29,11 @@ public class ProfesorController {
 
     }
 
-    //@GetMapping
-    //public ResponseEntity<Profesor> findById(@PathVariable Long Id){
-    //    Profesor profesor = this.profesorService.findById(Id);
-    //    return ResponseEntity.status(HttpStatus.OK).body(profesor);
-    //}
+    @GetMapping("/{id}")
+    public ResponseEntity<Profesor> findById(@PathVariable Long Id){
+        Profesor profesor = this.profesorService.findById(Id);
+        return ResponseEntity.status(HttpStatus.OK).body(profesor);
+    }
 
     //GUARDAR
     @PostMapping()
