@@ -29,9 +29,10 @@ public class ProfesorController {
 
     }
 
+    //LISTAR POR ID DE PROFESOR
     @GetMapping("/{id}")
-    public ResponseEntity<Profesor> findById(@PathVariable Long Id){
-        Profesor profesor = this.profesorService.findById(Id);
+    public ResponseEntity<Profesor> findById(@PathVariable Long id){
+        Profesor profesor = this.profesorService.findById(id);
         return ResponseEntity.status(HttpStatus.OK).body(profesor);
     }
 
