@@ -15,7 +15,9 @@ public class ReporteServiceImpl implements ReporteService{
     private ReporteRepository reporteRepository;
 
     @Override
-    public List<Reporte> findAll() { return this.reporteRepository.findAll(); }
+    public List<Reporte> findAll() {
+        return this.reporteRepository.findAll();
+    }
 
     @Override
     public Reporte findById(Long id) {
@@ -24,15 +26,22 @@ public class ReporteServiceImpl implements ReporteService{
         );
     }
 
-    // Falta implementar exception (try / catch ?)
     @Override
     public Reporte save(Reporte reporte) {
         return this.reporteRepository.save(reporte);
     }
 
     @Override
-    public Reporte update(Reporte reporte) {
-        return this.reporteRepository.save(reporte);
+    public Reporte update(Long id, Reporte reporte) {
+        Reporte reporteUpdateEstado = reporteRepository.findById(id).orElseThrow(
+                () -> new ReporteException("El reporte con id: " + id + " no se encuentra en la base de datos")
+        );
+        reporteUpdateEstado.setEstado(reporte.getEstado());
+        return reporteRepository.save(reporteUpdateEstado);
     }
 
+    @Override
+    public void deleteById(Long id) {
+        reporteRepository.deleteById(id);
+    }
 }

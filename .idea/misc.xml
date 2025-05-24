@@ -9,6 +9,7 @@
     </option>
     <option name="ignoredFiles">
       <set>
+        <option value="$PROJECT_DIR$/msvc-gerente-cursos/pom.xml" />
         <option value="$PROJECT_DIR$/msvc-reportes/pom.xml" />
       </set>
     </option>

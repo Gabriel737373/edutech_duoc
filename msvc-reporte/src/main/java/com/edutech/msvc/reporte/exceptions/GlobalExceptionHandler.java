@@ -1,6 +1,6 @@
-package com.jonaour.msvc.inscripcionCurso.exceptions;
+package com.edutech.msvc.reporte.exceptions;
 
-import com.jonaour.msvc.inscripcionCurso.dtos.ErrorDTO;
+import com.edutech.msvc.reporte.dtos.ErrorDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -15,16 +15,16 @@ import java.util.Map;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(InscripcionCursoException.class)
-    public ResponseEntity<ErrorDTO> handleAlumnoException(InscripcionCursoException exception) {
+    @ExceptionHandler(ReporteException.class)
+    public ResponseEntity<ErrorDTO> handleReporteException(ReporteException exception) {
 
         if (exception.getMessage().contains("no se encuentra en la base de datos")) {
-            Map<String, String> errorMap = Collections.singletonMap("Inscripcion curso no encontrada", exception.getMessage());
+            Map<String, String> errorMap = Collections.singletonMap("Reporte no encontrado", exception.getMessage());
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body(this.createErrorDTO(HttpStatus.NOT_FOUND, new Date(), errorMap));
 
         } else {
-            Map<String, String> errorMap = Collections.singletonMap("Inscripcion curso existente", exception.getMessage());
+            Map<String, String> errorMap = Collections.singletonMap("Reporte existente", exception.getMessage());
             return ResponseEntity.status(HttpStatus.CONFLICT)
                     .body(this.createErrorDTO(HttpStatus.CONFLICT, new Date(), errorMap));
         }

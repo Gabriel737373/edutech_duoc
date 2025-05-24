@@ -4,9 +4,7 @@ import lombok.*;
 
 @Getter @Setter @ToString
 @NoArgsConstructor @AllArgsConstructor
-public class GerenteCursos {
-
+public class GerenteCurso {
     private Long idGerenteCurso;
-
     private String nombre;
 }

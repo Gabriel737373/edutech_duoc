@@ -1,6 +1,5 @@
 package com.edutech.msvc.resenias.exceptions;
 
-
 import com.edutech.msvc.resenias.dtos.ErrorDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
