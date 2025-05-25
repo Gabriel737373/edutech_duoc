@@ -64,7 +64,7 @@ public class ProfesorController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Profesor> delete(@PathVariable Long id){
         this.profesorService.deleteById(id);
-        Map<String, String> response = Collections.singletonMap("Profesor eliminado correctamente","Profesor eliminado correctamente");
+        //Map<String, String> response = Collections.singletonMap("Profesor eliminado correctamente","Profesor eliminado correctamente");
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }
