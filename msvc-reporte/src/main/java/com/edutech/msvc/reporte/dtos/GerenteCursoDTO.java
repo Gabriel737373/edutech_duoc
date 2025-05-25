@@ -1,10 +1,10 @@
-package com.edutech.msvc.reporte.models;
+package com.edutech.msvc.reporte.dtos;
 
 import lombok.*;
 
 @Getter @Setter @ToString
 @NoArgsConstructor @AllArgsConstructor
-public class GerenteCurso {
-    private Long idGerenteCurso;
+public class GerenteCursoDTO {
+
     private String nombreCompleto;
 }

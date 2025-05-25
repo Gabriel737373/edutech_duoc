@@ -16,11 +16,14 @@ public class Reporte {
     @Column(name = "id_reporte")
     private Long idReporte;
 
-    @Column(nullable = false)
+    @Column(nullable = false, name = "descripcion")
     @NotBlank(message = "El campo descripcion no puede estar vacio")
     private String descripcion;
 
-    @Column(nullable = false)
+    @Column(nullable = false, name = "estado")
     @NotBlank(message = "El campo estado no puede estar vacio")
     private String estado;
+
+    @Column(nullable = false, name = "id_gerenteCurso")
+    private Long idGerenteCurso;
 }

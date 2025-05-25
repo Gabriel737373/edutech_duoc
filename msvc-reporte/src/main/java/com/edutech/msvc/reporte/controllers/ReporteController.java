@@ -30,6 +30,11 @@ public class ReporteController {
         return ResponseEntity.status(HttpStatus.OK).body(reporteService.findById(id));
     }
 
+    @GetMapping("/gerenteCursos/{id}")
+    public ResponseEntity<List<Reporte>> findGerenteById(@PathVariable Long id) {
+        return ResponseEntity.status(HttpStatus.OK).body(this.reporteService.findByGerenteCursoId(id));
+    }
+
     @PostMapping
     public ResponseEntity<Reporte> save(@Valid @RequestBody Reporte reporte) {
         return ResponseEntity.status(HttpStatus.CREATED).body(reporteService.save(reporte));

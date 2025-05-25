@@ -28,13 +28,13 @@ public class GerenteCursoImpl implements GerenteCursoService {
         );
     }
 
-    // Metodo para guardar alumno
+    // Metodo para guardar gerentes
     @Override
     public GerenteCurso save(GerenteCurso gerenteCurso) {
         return this.gerenteRepository.save(gerenteCurso);
     }
 
-    // Metodo para eliminar alumno por id
+    // Metodo para eliminar gerentes por id
     @Override
     public void deleteById(Long id) {
         this.gerenteRepository.deleteById(id);
