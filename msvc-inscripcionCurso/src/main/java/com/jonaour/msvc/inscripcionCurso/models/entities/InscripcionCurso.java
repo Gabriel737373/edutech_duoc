@@ -35,4 +35,7 @@ public class InscripcionCurso {
     @NotNull(message = "El campo id_curso no puede estar vacío")
     private Long idCurso;
 
+    @Column(name = "id_gerente_curso")
+    @NotNull(message = "El campo id_gerente_curso no puede estar vacío")
+    public Long idGerenteCurso;
 }

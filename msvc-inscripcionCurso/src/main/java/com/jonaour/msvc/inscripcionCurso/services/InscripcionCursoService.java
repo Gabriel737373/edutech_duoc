@@ -9,9 +9,10 @@ public interface InscripcionCursoService {
 
     InscripcionCurso findById(Long id);
     InscripcionCurso save(InscripcionCurso inscripcionCurso);
-    List<InscripcionCurso> findbyAlumnoId(Long alumnoId); //REVISAR EN POST MAN POR EL ARGUMENTO
-    List<InscripcionCurso> findbyProfesorId(Long profesorId); //REVISAR EN POST MAN POR EL ARGUMENTO
-    List<InscripcionCurso> findbyCursoId(Long cursoId); //REVISAR EN POST MAN POR EL ARGUMENTO
+    List<InscripcionCurso> findbyAlumnoId(Long alumnoId);
+    List<InscripcionCurso> findbyProfesorId(Long profesorId);
+    List<InscripcionCurso> findbyCursoId(Long cursoId);
+    List<InscripcionCurso> findByGerenteCursoId(Long gerenteCursoId);
     List<InscripcionCursoDTO> findAll();
     void deleteById(Long id);
     InscripcionCurso update(Long id, InscripcionCurso inscripcionCurso);

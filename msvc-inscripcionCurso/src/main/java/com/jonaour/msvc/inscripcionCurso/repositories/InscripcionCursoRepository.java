@@ -11,4 +11,5 @@ public interface InscripcionCursoRepository extends JpaRepository<InscripcionCur
     List<InscripcionCurso> findByIdAlumno(Long idAlumno);
     List<InscripcionCurso> findByIdProfesor(Long idProfesor);
     List<InscripcionCurso> findByIdCurso(Long idCurso);
+    List<InscripcionCurso> findByIdGerenteCurso(Long idGerenteCurso);
 }
