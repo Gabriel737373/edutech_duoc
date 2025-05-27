@@ -50,10 +50,12 @@ public class ReseniaController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Resenia> update(@PathVariable Long id, @Valid @RequestBody ReseniaDTO reseniaDTO){
+    public ResponseEntity<Resenia> update(@PathVariable Long id, @Valid @RequestBody Resenia reseniaNEW){
         Resenia resenia=new Resenia();
-        resenia.setValoracionResenia(reseniaDTO.getValoricacionResenia());
-        resenia.setComentarioResenia(reseniaDTO.getComentarioResenia());
+        resenia.setValoracionResenia(reseniaNEW.getValoracionResenia());
+        resenia.setComentarioResenia(reseniaNEW.getComentarioResenia());
+        resenia.setIdAlumno(reseniaNEW.getIdAlumno());
+        resenia.setIdCurso(reseniaNEW.getIdCurso());
         Resenia updated=reseniaService.update(id,resenia);
         return ResponseEntity.status(HttpStatus.OK).body(updated);
     }

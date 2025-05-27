@@ -1,12 +1,12 @@
 package com.edutech.msvc.resenias.services;
 
 import com.edutech.msvc.resenias.clients.AlumnoClientRest;
-import com.edutech.msvc.resenias.dtos.AlumnoDTO;
-import com.edutech.msvc.resenias.dtos.ReseniaDTO;
+import com.edutech.msvc.resenias.clients.CursoClientRest;
 import com.edutech.msvc.resenias.exceptions.ReseniaException;
 import com.edutech.msvc.resenias.models.Alumno;
 import com.edutech.msvc.resenias.models.entities.Resenia;
 import com.edutech.msvc.resenias.repositories.ReseniaRepository;
+import com.jonaour.msvc.inscripcionCurso.models.Curso;
 import feign.FeignException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,6 +22,9 @@ public class ReseniaServiceImpl implements ReseniaService {
     @Autowired
     private AlumnoClientRest alumnoClientRest;
 
+    @Autowired
+    private CursoClientRest cursoClientRest;
+
     @Override
     public Resenia findById(Long id) {
         return this.reseniaRepository.findById(id).orElseThrow(
@@ -35,6 +38,12 @@ public class ReseniaServiceImpl implements ReseniaService {
             Alumno alumno=this.alumnoClientRest.findById(resenia.getIdAlumno());
         }catch (FeignException ex){
             throw new ReseniaException("Existen problemas con la asociación reseña-alumno");
+        }
+
+        try{
+            Curso curso=this.cursoClientRest.findById(resenia.getIdCurso());
+        }catch (FeignException ex){
+            throw new ReseniaException("Existen problemas con la asociación reseña-curso");
         }
         return this.reseniaRepository.save(resenia);
     }
@@ -50,28 +59,6 @@ public class ReseniaServiceImpl implements ReseniaService {
         return this.reseniaRepository.findAll();
     }
 
-    //Metodo inactivo
-    /*
-    @Override
-    public List<ReseniaDTO> findAll() {
-        return this.reseniaRepository.findAll().stream().map(resenia -> {
-            Alumno alumno = null;
-            try{
-                alumno = this.alumnoClientRest.findById(resenia.getIdAlumno());
-            }catch (FeignException ex){
-                throw new ReseniaException("El alumno no existe en la base de datos");
-            }
-
-            AlumnoDTO alumnoDTO = new AlumnoDTO();
-            alumnoDTO.setCorreo(alumno.getCorreo());
-            alumnoDTO.setNombreCompleto(alumno.getNombreCompleto());
-
-            ReseniaDTO reseniaDTO = new ReseniaDTO();
-            reseniaDTO.setAlumnoDTO(alumnoDTO);
-            return reseniaDTO;
-        }).toList();
-    }
-    */
 
     @Override
     public void deleteById(Long id) {
@@ -84,6 +71,8 @@ public class ReseniaServiceImpl implements ReseniaService {
                 ()->new ReseniaException("Reseña con ID: "+id+" no encontrada"));
         reseniaFind.setComentarioResenia(resenia.getComentarioResenia());
         reseniaFind.setValoracionResenia(resenia.getValoracionResenia());
+        reseniaFind.setIdAlumno(resenia.getIdAlumno());
+        reseniaFind.setIdCurso(resenia.getIdCurso());
         return reseniaRepository.save(reseniaFind);
     }
 }
