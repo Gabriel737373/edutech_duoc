@@ -71,10 +71,14 @@ public class InscripcionCursoController {
 
     //Metodo para editar una inscripcion
     @PutMapping("/{id}")
-    public ResponseEntity<InscripcionCurso> update(@PathVariable Long id, @Valid @RequestBody InscripcionCursoDTO inscripcionCursoDTO){
+    public ResponseEntity<InscripcionCurso> update(@PathVariable Long id, @Valid @RequestBody InscripcionCurso inscripcionCursoNew){
         InscripcionCurso inscripcionCurso=new InscripcionCurso();
-        inscripcionCurso.setCostoInscripcion(inscripcionCursoDTO.getCostoInscripcion());
-        inscripcionCurso.setFechaInscripcion(inscripcionCursoDTO.getFechaInscripcion());
+        inscripcionCurso.setCostoInscripcion(inscripcionCursoNew.getCostoInscripcion());
+        inscripcionCurso.setFechaInscripcion(inscripcionCursoNew.getFechaInscripcion());
+        inscripcionCurso.setIdAlumno(inscripcionCursoNew.getIdAlumno());
+        inscripcionCurso.setIdProfesor(inscripcionCursoNew.getIdProfesor());
+        inscripcionCurso.setIdCurso(inscripcionCursoNew.getIdCurso());
+        inscripcionCurso.setIdGerenteCurso(inscripcionCursoNew.getIdGerenteCurso());
         InscripcionCurso updated= inscripcionCursoService.update(id, inscripcionCurso);
         return ResponseEntity.status(HttpStatus.OK).body(updated);
     }
