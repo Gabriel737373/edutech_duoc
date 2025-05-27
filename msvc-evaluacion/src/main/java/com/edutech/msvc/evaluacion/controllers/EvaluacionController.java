@@ -3,6 +3,7 @@ package com.edutech.msvc.evaluacion.controllers;
 import com.edutech.msvc.evaluacion.dtos.EvaluacionDTO;
 import com.edutech.msvc.evaluacion.models.entities.Evaluacion;
 import com.edutech.msvc.evaluacion.services.EvaluacionService;
+import jakarta.persistence.Id;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -28,6 +29,12 @@ public class EvaluacionController {
     }
 
     @GetMapping("/{id}")
+    public ResponseEntity<Evaluacion> findById(@PathVariable Long id){
+        Evaluacion evaluacion = this.evaluacionService.findById(id);
+        return ResponseEntity.status(HttpStatus.OK).body(evaluacion);
+    }
+
+    @PostMapping()
     public ResponseEntity<Evaluacion> save(@Valid @RequestBody EvaluacionDTO evaluacionDTO){
         Evaluacion evaluacion = new Evaluacion();
         evaluacion.setNombreEvaluacion(evaluacionDTO.getNombreEvaluacion());
@@ -37,7 +44,7 @@ public class EvaluacionController {
 
     }
 
-    @PostMapping("/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<Evaluacion> update(@PathVariable Long id, @Valid @RequestBody EvaluacionDTO evaluacionDTO){
         Evaluacion evaluacion = new Evaluacion();
         evaluacion.setNombreEvaluacion(evaluacionDTO.getNombreEvaluacion());
