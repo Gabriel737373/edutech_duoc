@@ -92,6 +92,15 @@ public class InscripcionCursoServiceImpl implements InscripcionCursoService{
         return this.inscripcionCursoRepository.findByIdGerenteCurso(gerenteCursoId);
     }
 
+    /*
+    @Override
+    public List<InscripcionCurso> findAll(){
+        return this.inscripcionCursoRepository.findAll();
+    }
+
+     */
+
+
     @Override
     public List<InscripcionCursoDTO> findAll() {
         return this.inscripcionCursoRepository.findAll().stream().map(inscripcionCurso -> {
@@ -146,7 +155,8 @@ public class InscripcionCursoServiceImpl implements InscripcionCursoService{
             inscripcionCursoDTO.setProfesor(profesorDTO);
             inscripcionCursoDTO.setCurso(cursoDTO);
             inscripcionCursoDTO.setGerenteCurso(gerenteCursoDTO);
-            //SETEAR LOS DTO DE FECHA
+            inscripcionCursoDTO.setCostoInscripcion(inscripcionCurso.getCostoInscripcion());
+            inscripcionCursoDTO.setFechaInscripcion(inscripcionCurso.getFechaInscripcion());
             return inscripcionCursoDTO;
 
         }).toList();
@@ -156,6 +166,8 @@ public class InscripcionCursoServiceImpl implements InscripcionCursoService{
     public void deleteById(Long id) {
         inscripcionCursoRepository.deleteById(id);
     }
+
+
 
     @Override
     public InscripcionCurso update(Long id, InscripcionCurso inscripcionCurso) {

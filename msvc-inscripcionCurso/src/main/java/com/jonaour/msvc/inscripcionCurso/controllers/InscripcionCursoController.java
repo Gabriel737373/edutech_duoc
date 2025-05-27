@@ -20,7 +20,6 @@ public class InscripcionCursoController {
     @Autowired
     private InscripcionCursoService inscripcionCursoService;
 
-    //Metodo findAll todas las inscripcion
     @GetMapping
     public ResponseEntity<List<InscripcionCursoDTO>> findAll(){
         return ResponseEntity.status(HttpStatus.OK).body(this.inscripcionCursoService.findAll());
