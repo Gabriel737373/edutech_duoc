@@ -87,13 +87,4 @@ public class CursoServiceTest {
         verify(cursoRepository, times(1)).save(any(Curso.class));
     }
 
-
-
-
-
-
-
-
-
-
 }
