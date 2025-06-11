@@ -3,6 +3,10 @@ package com.edutech_duoc.msvc_profesor.controllers;
 import com.edutech_duoc.msvc_profesor.dtos.ProfesorDTO;
 import com.edutech_duoc.msvc_profesor.models.entities.Profesor;
 import com.edutech_duoc.msvc_profesor.services.ProfesorService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.persistence.Id;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +22,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/v1/profesores")
 @Validated
+@Tag(name = "Profesores", description = "Esta seccion contiene los cruds de los profesores")
 public class ProfesorController {
 
     @Autowired
@@ -25,6 +30,10 @@ public class ProfesorController {
 
     //LISTAR TODOS
     @GetMapping
+    @Operation(summary = "Lista todos los profesores", description = "Lista todo los profesores" + " ,en caso de error no mostraria nada")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Se listaron todos los medicos correctamente")
+    })
     public ResponseEntity<List<Profesor>> findAll(){
         List<Profesor> profesores = this.profesorService.findAll();
         return ResponseEntity.status(HttpStatus.OK).body(profesores);

@@ -25,4 +25,8 @@ public class Resenia {
     @Column(name = "id_alumno")
     @NotNull(message = "El campo id_alumno no puede estar vacío")
     private Long idAlumno;
+
+    @Column(name = "id_curso")
+    @NotNull(message = "El campo id_curso no puede estar vacío")
+    private Long idCurso;
 }
