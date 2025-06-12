@@ -34,21 +34,64 @@ public class CursoServiceTest {
     @BeforeEach
     public void setUp() {
 
-        Faker faker = new Faker(Locale.of("es", "CL"));
+        Faker faker = new Faker(new Locale("es", "CL"));
+
+        // Lista de nombres de cursos personalizados
+        List<String> nombresDeCursos = Arrays.asList(
+                "Introducción a la Programación",
+                "Fundamentos de la Ingeniería",
+                "Matemáticas Avanzadas",
+                "Teoría de la Relatividad",
+                "Gestión de Proyectos",
+                "Análisis de Datos en Ciencias Sociales",
+                "Desarrollo Web con Java",
+                "Ciberseguridad: Protección de Sistemas",
+                "Inteligencia Artificial y Aprendizaje Automático",
+                "Fundamentos de Electrónica"
+        );
+
+        // Lista de descripciones de cursos
+        List<String> descripcionesDeCursos = Arrays.asList(
+                "Este curso cubre los fundamentos básicos de la programación y estructuras de datos.",
+                "Curso orientado a la introducción a los conceptos y aplicaciones de la ingeniería.",
+                "Estudiaremos álgebra avanzada, cálculo y ecuaciones diferenciales.",
+                "Exploramos la teoría y aplicaciones de la relatividad especial y general.",
+                "Aprende a gestionar proyectos desde la planificación hasta la ejecución.",
+                "En este curso analizaremos cómo se manejan grandes volúmenes de datos en diferentes áreas.",
+                "Aprende a desarrollar aplicaciones web utilizando tecnologías modernas como Spring Boot.",
+                "Este curso cubre las mejores prácticas para proteger sistemas informáticos de amenazas externas.",
+                "Introducción a los conceptos de inteligencia artificial y cómo se entrenan modelos de aprendizaje automático.",
+                "Curso enfocado en los principios y componentes básicos de la electrónica."
+        );
+
+        // Inicializar lista de cursos
         for (int i = 0; i < 100; i++) {
             Curso curso = new Curso();
             curso.setIdCurso((long) i);
-            curso.setNombreCurso(faker.commerce().productName());
-            curso.setDescripcionCurso(faker.lorem().paragraph().substring(20, 255));
+            curso.setNombreCurso(nombresDeCursos.get(faker.random().nextInt(nombresDeCursos.size())));
+
+            // Generar descripción aleatoria de la lista
+            String descripcionCurso = descripcionesDeCursos.get(faker.random().nextInt(descripcionesDeCursos.size()));
+            // Asegurarse de que la descripción no esté vacía
+            if (descripcionCurso == null || descripcionCurso.trim().isEmpty()) {
+                descripcionCurso = "Descripción predeterminada del curso.";  // Valor por defecto si es vacía
+            } else if (descripcionCurso.length() > 255) {
+                descripcionCurso = descripcionCurso.substring(0, 255);  // Limitar la descripción si es muy larga
+            }
+
+            curso.setDescripcionCurso(descripcionCurso);
+
             curso.setPrecioCurso(faker.number().numberBetween(150000, 750000));
 
             this.cursos.add(curso);
         }
-        this.cursoPrueba = new Curso(
-                 1L, "Curso de JS", "Introduccion a Java Script", 150000
-         );
 
+        // Inicializar curso de prueba
+        this.cursoPrueba = new Curso(
+                1L, "Curso de JS", "Introducción a JavaScript", 150000
+        );
     }
+
 
     @Test
     @DisplayName("Debe listar todos los cursos")
