@@ -42,13 +42,11 @@ public class CursoServiceTest {
             curso.setDescripcionCurso(faker.lorem().paragraph());
             curso.setPrecioCurso(faker.number().numberBetween(150000, 750000));
 
-            //Me faltan los Strings que nose que hacen (creo que no los necesito)
-
             this.cursos.add(curso);
         }
-        //this.cursoPrueba = new Curso(
-        //          1L, "Curso de JS", "Introduccion a Java Script", 150000
-        // );
+        this.cursoPrueba = new Curso(
+                 1L, "Curso de JS", "Introduccion a Java Script", 150000
+         );
 
     }
 

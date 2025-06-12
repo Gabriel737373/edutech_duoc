@@ -30,7 +30,9 @@ public class CursoController {
     private CursoService cursoService;
 
     @GetMapping
-    @Operation(summary = "Retorna todos los Curso", description = "Devuelve un Listado de 'Cursos' en caso de no encontrar retorna una lista vacia")
+    @Operation(summary = "Retorna todos los Curso",
+               description = "Devuelve un Listado de 'Cursos' en caso "+
+                              "de no encontrar retorna una lista vacia")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Se retornaron todos los cursos OK")
     })
@@ -40,13 +42,16 @@ public class CursoController {
     }
 
     @GetMapping("/{id}")
-    @Operation(summary = "Retorna un Curso por su ID", description = "Devuelve un 'Curso' en caso de no encontrar retorna una lista vacia")
+    @Operation(summary = "Retorna un Curso por su ID",
+               description = "Devuelve un 'Curso' en caso "+
+                             "de no encontrar retorna una lista vacia")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Se retorno un curso OK"),
             @ApiResponse(responseCode = "400", description = "Error - Curso con ID no encontrado")
     })
     @Parameters(value = {
-            @Parameter(name = "id", description = "Este es el id unico de un curso", required = true)
+            @Parameter(name = "id",
+                       description = "Este es el id unico de un curso", required = true)
     })
     public ResponseEntity<Curso> findById(@PathVariable Long id){
         Curso curso = this.cursoService.findById(id);
