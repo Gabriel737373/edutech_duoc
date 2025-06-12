@@ -39,7 +39,7 @@ public class CursoServiceTest {
             Curso curso = new Curso();
             curso.setIdCurso((long) i);
             curso.setNombreCurso(faker.commerce().productName());
-            curso.setDescripcionCurso(faker.lorem().paragraph());
+            curso.setDescripcionCurso(faker.lorem().paragraph().substring(20, 255));
             curso.setPrecioCurso(faker.number().numberBetween(150000, 750000));
 
             this.cursos.add(curso);
