@@ -74,9 +74,9 @@ public class CursoServiceTest {
             String descripcionCurso = descripcionesDeCursos.get(faker.random().nextInt(descripcionesDeCursos.size()));
             // Asegurarse de que la descripción no esté vacía
             if (descripcionCurso == null || descripcionCurso.trim().isEmpty()) {
-                descripcionCurso = "Descripción predeterminada del curso.";  // Valor por defecto si es vacía
+                descripcionCurso = "Descripción predeterminada del curso.";
             } else if (descripcionCurso.length() > 255) {
-                descripcionCurso = descripcionCurso.substring(0, 255);  // Limitar la descripción si es muy larga
+                descripcionCurso = descripcionCurso.substring(0, 255);
             }
 
             curso.setDescripcionCurso(descripcionCurso);
@@ -86,7 +86,6 @@ public class CursoServiceTest {
             this.cursos.add(curso);
         }
 
-        // Inicializar curso de prueba
         this.cursoPrueba = new Curso(
                 1L, "Curso de JS", "Introducción a JavaScript", 150000
         );

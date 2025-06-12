@@ -1,12 +1,16 @@
 package com.edutech.msvc.curso.controllers;
 
 import com.edutech.msvc.curso.dtos.CursoDTO;
+import com.edutech.msvc.curso.dtos.ErrorDTO;
 import com.edutech.msvc.curso.models.entities.Curso;
 import com.edutech.msvc.curso.services.CursoService;
 import com.edutech.msvc.curso.services.CursoServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.ExampleObject;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -47,7 +51,9 @@ public class CursoController {
                              "de no encontrar retorna una lista vacia")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Se retorno un curso OK"),
-            @ApiResponse(responseCode = "400", description = "Error - Curso con ID no encontrado")
+            @ApiResponse(responseCode = "400", description = "Error - Curso con ID no encontrado",
+                         content = @Content(mediaType = "application/json",
+                          schema = @Schema(implementation = ErrorDTO.class)))
     })
     @Parameters(value = {
             @Parameter(name = "id",
@@ -59,6 +65,22 @@ public class CursoController {
     }
 
     @PostMapping
+    @Operation(
+            summary = "Endpoint que permite guardar un Curso",
+            description = "Este endpoint manda un body con el formato Curso.class "+
+                    "y permite la creacion de Curso"
+    )
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Curso creaco correctamente")
+    })
+    @io.swagger.v3.oas.annotations.parameters.RequestBody(
+            required = true,
+            description = "Este debe ser el Json con los datos de Curso",
+            content = @Content(
+                    mediaType = "application/json",
+                    schema = @Schema(implementation = Curso.class)
+            )
+    )
     public ResponseEntity<Curso> save(@Valid @RequestBody CursoDTO cursoDTO){
         Curso curso = new Curso();
         curso.setNombreCurso(cursoDTO.getNombreCurso());
