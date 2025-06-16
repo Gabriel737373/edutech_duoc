@@ -19,7 +19,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-public class CursoServiceTest {
+public class  CursoServiceTest {
 
     @Mock
     private CursoRepository cursoRepository;
