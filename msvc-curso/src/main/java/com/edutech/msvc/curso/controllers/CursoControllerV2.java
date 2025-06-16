@@ -4,12 +4,10 @@ import com.edutech.msvc.curso.dtos.CursoDTO;
 import com.edutech.msvc.curso.dtos.ErrorDTO;
 import com.edutech.msvc.curso.models.entities.Curso;
 import com.edutech.msvc.curso.services.CursoService;
-import com.edutech.msvc.curso.services.CursoServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -18,17 +16,16 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v2/cursos")
+@RequestMapping("/api/v3/cursos")
 @Validated
 @Tag(name = "Cursos", description = "Metodos CRUD para cursos")
-public class CursoController {
+public class CursoControllerV2 {
 
     @Autowired
     private CursoService cursoService;
