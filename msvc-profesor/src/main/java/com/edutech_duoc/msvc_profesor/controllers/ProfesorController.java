@@ -33,7 +33,7 @@ public class ProfesorController {
     @Operation(summary = "Lista todos los profesores", description = "Lista todo los profesores" + " ,en caso de error no mostraria nada")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Se listaron todos los medicos correctamente")
-    })
+    } )
     public ResponseEntity<List<Profesor>> findAll(){
         List<Profesor> profesores = this.profesorService.findAll();
         return ResponseEntity.status(HttpStatus.OK).body(profesores);
@@ -42,6 +42,11 @@ public class ProfesorController {
 
     //LISTAR POR ID DE PROFESOR
     @GetMapping("/{id}")
+    @Operation(summary = "Listar a 1 profesor mediante su id", description = "Lista unicamente a un profesor para conocer sus datos" + " ,en caso de error no mostraria nada")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Se listo al profesor correctamente"),
+            @ApiResponse(responseCode = "404", description = "Hubo algun error en el prompt a la hora de buscar al profesor")
+    })
     public ResponseEntity<Profesor> findById(@PathVariable Long id){
         Profesor profesor = this.profesorService.findById(id);
         return ResponseEntity.status(HttpStatus.OK).body(profesor);
