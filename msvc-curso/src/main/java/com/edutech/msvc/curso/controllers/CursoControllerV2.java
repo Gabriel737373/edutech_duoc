@@ -1,8 +1,10 @@
 package com.edutech.msvc.curso.controllers;
 
+import com.edutech.msvc.curso.assemblers.CursoModelAssembler;
 import com.edutech.msvc.curso.dtos.CursoDTO;
 import com.edutech.msvc.curso.dtos.ErrorDTO;
 import com.edutech.msvc.curso.models.entities.Curso;
+import com.edutech.msvc.curso.repositories.CursoRepository;
 import com.edutech.msvc.curso.services.CursoService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -14,12 +16,17 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.CollectionModel;
+import org.springframework.hateoas.EntityModel;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
+import org.springframework.hateoas.MediaTypes;
+
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 
 @RestController
 @RequestMapping("/api/v3/cursos")
@@ -30,16 +37,32 @@ public class CursoControllerV2 {
     @Autowired
     private CursoService cursoService;
 
-    @GetMapping
+    @Autowired
+    private CursoModelAssembler cursoModelAssembler;
+
+    @GetMapping(produces = MediaTypes.HAL_JSON_VALUE)
     @Operation(summary = "Retorna todos los Curso",
                description = "Devuelve un Listado de 'Cursos' en caso "+
                               "de no encontrar retorna una lista vacia")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Se retornaron todos los cursos OK")
+            @ApiResponse(responseCode = "200", description = "Se retornaron todos los cursos OK",
+            content = @Content(
+                      mediaType = MediaTypes.HAL_JSON_VALUE,
+                      schema = @Schema(implementation = Curso.class)
+            ))
     })
-    public ResponseEntity<List<Curso>> findAll() {
-        List<Curso> cursos = this.cursoService.findAll();
-        return ResponseEntity.status(HttpStatus.OK).body(cursos);
+    public ResponseEntity<CollectionModel<EntityModel<Curso>>>findAll() {
+        List<EntityModel<Curso>> entityModels = this.cursoService.findAll()
+                .stream()
+                .map(cursoModelAssembler::toModel)
+                .toList();
+        CollectionModel<EntityModel<Curso>> collectionModel = CollectionModel.of(
+                entityModels,
+                linkTo(methodOn(CursoControllerV2.class).findAll()).withSelfRel()
+        );
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(collectionModel);
     }
 
     @GetMapping("/{id}")
