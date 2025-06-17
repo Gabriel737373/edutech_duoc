@@ -32,7 +32,8 @@ public class ProfesorController {
     @GetMapping
     @Operation(summary = "Lista todos los profesores", description = "Lista todo los profesores" + " ,en caso de error no mostraria nada")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Se listaron todos los medicos correctamente")
+            @ApiResponse(responseCode = "200", description = "Se listaron todos los medicos correctamente"),
+            @ApiResponse(responseCode = "404", description = "Hubo algun error en el prompt a la hora de ingresarlo")
     } )
     public ResponseEntity<List<Profesor>> findAll(){
         List<Profesor> profesores = this.profesorService.findAll();
@@ -54,6 +55,11 @@ public class ProfesorController {
 
     //GUARDAR
     @PostMapping()
+    @Operation(summary = "Guarda a un nuevo profesor", description = "Guarda a un nuevo profesor con toda su informacion correspondiente")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Peticion realizada con exito"),
+            @ApiResponse(responseCode = "404", description = "Hubo algun error en el prompt a la hora de buscar al profesor")
+    })
     public ResponseEntity<Profesor> save(@Valid @RequestBody ProfesorDTO profesorDTO){
         Profesor profesor = new Profesor();
         profesor.setNombreProfesor(profesorDTO.getNombreProfesor());
@@ -65,6 +71,11 @@ public class ProfesorController {
 
     //ACTUALIZAR
     @PutMapping("/{id}")
+    @Operation(summary = "Actualiza a un profesor", description = "Acctualiza la informacion de un profesor mediante el id de este mismo")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Peticion realizada con exito"),
+            @ApiResponse(responseCode = "404", description = "Hubo algun error en el prompt a la hora de buscar al profesor")
+    })
     public ResponseEntity<Profesor> update(@PathVariable Long id, @Valid @RequestBody ProfesorDTO profesorDTO) {
         Profesor profesor = new Profesor();
         profesor.setNombreProfesor(profesorDTO.getNombreProfesor());
@@ -76,9 +87,13 @@ public class ProfesorController {
 
     //ELIMINAR
     @DeleteMapping("/{id}")
+    @Operation(summary = "Elimina a un profesor", description = "Mediante el id elimina a un profesor de la base de datos")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Peticion realizada con exito"),
+            @ApiResponse(responseCode = "404", description = "Hubo algun error en el prompt a la hora de buscar al profesor")
+    })
     public ResponseEntity<Profesor> delete(@PathVariable Long id){
         this.profesorService.deleteById(id);
-        //Map<String, String> response = Collections.singletonMap("Profesor eliminado correctamente","Profesor eliminado correctamente");
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }
