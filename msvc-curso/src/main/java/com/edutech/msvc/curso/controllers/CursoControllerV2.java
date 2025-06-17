@@ -14,6 +14,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.ReportAsSingleViolation;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.CollectionModel;
@@ -65,13 +66,21 @@ public class CursoControllerV2 {
                 .body(collectionModel);
     }
 
-    @GetMapping("/{id}")
-    @Operation(summary = "Retorna un Curso por su ID",
+    @GetMapping(value = "/{id}", produces = MediaTypes.HAL_JSON_VALUE)
+    @Operation(summary = "Retorna un Curso respecto a su ID",
                description = "Devuelve un 'Curso' en caso "+
                              "de no encontrar retorna una lista vacia")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Se retorno un curso OK"),
-            @ApiResponse(responseCode = "400", description = "Error - Curso con ID no encontrado",
+            @ApiResponse(responseCode = "200",
+                         description = "Se retorno un curso OK",
+                         content = @Content(
+                                   mediaType = MediaTypes.HAL_JSON_VALUE,
+                                   schema = @Schema(implementation = Curso.class)
+                         )
+            ),
+            @ApiResponse(
+                    responseCode = "400",
+                    description = "Error - Curso con ID no encontrado",
                          content = @Content(mediaType = "application/json",
                           schema = @Schema(implementation = ErrorDTO.class)))
     })
@@ -79,19 +88,27 @@ public class CursoControllerV2 {
             @Parameter(name = "id",
                        description = "Este es el id unico de un curso", required = true)
     })
-    public ResponseEntity<Curso> findById(@PathVariable Long id){
-        Curso curso = this.cursoService.findById(id);
-        return ResponseEntity.status(HttpStatus.OK).body(curso);
+    public ResponseEntity<EntityModel<Curso>> findById(@PathVariable Long id){
+        EntityModel<Curso> entityModel = this.cursoModelAssembler.toModel(
+                cursoService.findById(id)
+        );
+        return ResponseEntity.status(HttpStatus.OK).body(entityModel);
     }
 
-    @PostMapping
+    @PostMapping(produces = MediaTypes.HAL_JSON_VALUE)
     @Operation(
             summary = "Endpoint que permite guardar un Curso",
             description = "Este endpoint manda un body con el formato Curso.class "+
                     "y permite la creacion de Curso"
     )
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Curso creaco correctamente")
+            @ApiResponse(responseCode = "201",
+                         description = "Curso creaco correctamente",
+                         content = @Content(
+                                 mediaType = MediaTypes.HAL_JSON_VALUE,
+                                 schema =  @Schema(implementation = Curso.class)
+                         )
+            )
     })
     @io.swagger.v3.oas.annotations.parameters.RequestBody(
             required = true,
@@ -101,24 +118,42 @@ public class CursoControllerV2 {
                     schema = @Schema(implementation = Curso.class)
             )
     )
-    public ResponseEntity<Curso> save(@Valid @RequestBody CursoDTO cursoDTO){
-        Curso curso = new Curso();
-        curso.setNombreCurso(cursoDTO.getNombreCurso());
-        curso.setDescripcionCurso(cursoDTO.getDescripcionCurso());
-        curso.setPrecioCurso(cursoDTO.getPrecioCurso());
-        Curso saved = cursoService.save(curso);
-        return ResponseEntity.status(HttpStatus.CREATED).body(saved);
+    public ResponseEntity<EntityModel<Curso>> create (@Valid @RequestBody Curso curso){
+        Curso cursoNew = this.cursoService.save(curso);
+        EntityModel<Curso> entityModel = this.cursoModelAssembler.toModel(cursoNew);
+        return ResponseEntity
+                .created(linkTo(methodOn(CursoControllerV2.class).findById(cursoNew.getIdCurso())).toUri())
+                .body(entityModel);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Curso> update(@PathVariable Long id, @Valid @RequestBody CursoDTO cursoDTO){
-        Curso curso = new Curso();
-        curso.setNombreCurso(cursoDTO.getNombreCurso());
-        curso.setDescripcionCurso(cursoDTO.getDescripcionCurso());
-        curso.setPrecioCurso(cursoDTO.getPrecioCurso());
-        Curso updated = cursoService.update(id, curso);
-        return ResponseEntity.status(HttpStatus.OK).body(updated);
+    @PutMapping(value = "/{id}", produces = MediaTypes.HAL_JSON_VALUE)
+    @Operation(
+            summary = "Endpoint que permite actualizar un Curso existente",
+            description = "Este endpoint recibe un JSON con los datos actualizados del Curso " +
+                    "y retorna el Curso modificado con los enlaces HATEOAS correspondientes."
+    )
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Curso actualizado correctamente",
+                    content = @Content(mediaType = MediaTypes.HAL_JSON_VALUE,
+                            schema = @Schema(implementation = Curso.class))),
+            @ApiResponse(responseCode = "404", description = "Curso no encontrado",
+                    content = @Content)
+    })
+    @io.swagger.v3.oas.annotations.parameters.RequestBody(
+            required = true,
+            description = "Debe contener los campos del Curso a actualizar",
+            content = @Content(mediaType = "application/json",
+                    schema = @Schema(implementation = Curso.class))
+    )
+    public ResponseEntity<EntityModel<Curso>> update(
+            @PathVariable Long id,
+            @Valid @RequestBody Curso curso) {
+
+        Curso updatedCurso = this.cursoService.update(id, curso);
+        EntityModel<Curso> entityModel = this.cursoModelAssembler.toModel(updatedCurso);
+        return ResponseEntity.ok(entityModel);
     }
+
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Curso> delete(@PathVariable Long id){
