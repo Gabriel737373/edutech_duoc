@@ -79,7 +79,7 @@ public class CursoControllerV2 {
                          )
             ),
             @ApiResponse(
-                    responseCode = "400",
+                    responseCode = "404",
                     description = "Error - Curso con ID no encontrado",
                          content = @Content(mediaType = "application/json",
                           schema = @Schema(implementation = ErrorDTO.class)))
@@ -103,7 +103,7 @@ public class CursoControllerV2 {
     )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201",
-                         description = "Curso creaco correctamente",
+                         description = "Curso creado correctamente",
                          content = @Content(
                                  mediaType = MediaTypes.HAL_JSON_VALUE,
                                  schema =  @Schema(implementation = Curso.class)
@@ -136,7 +136,7 @@ public class CursoControllerV2 {
             @ApiResponse(responseCode = "200", description = "Curso actualizado correctamente",
                     content = @Content(mediaType = MediaTypes.HAL_JSON_VALUE,
                             schema = @Schema(implementation = Curso.class))),
-            @ApiResponse(responseCode = "404", description = "Curso no encontrado",
+            @ApiResponse(responseCode = "404", description = "Error - Curso con ID no encontrado",
                     content = @Content)
     })
     @io.swagger.v3.oas.annotations.parameters.RequestBody(
@@ -156,13 +156,19 @@ public class CursoControllerV2 {
 
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Curso> delete(@PathVariable Long id){
+    @Operation(
+            summary = "Eliminar un Curso por ID",
+            description = "Este endpoint permite eliminar un Curso existente a través de su ID. " +
+                    "Si el curso es eliminado exitosamente, retorna un código 204 sin contenido."
+    )
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204", description = "Curso eliminado correctamente"),
+            @ApiResponse(responseCode = "404", description = "Error - Curso con ID no encontrado",
+                    content = @Content)
+    })
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
         this.cursoService.deleteById(id);
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        return ResponseEntity.noContent().build();
     }
-
-
-
-
 
 }

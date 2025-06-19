@@ -22,7 +22,7 @@ public class CursoServiceImpl implements CursoService{
     @Override
     public Curso findById(Long id) {
         return this.cursoRepository.findById(id).orElseThrow(
-                () -> new CursoException("El curso con id "+id+" no existe")
+                () -> new CursoException("El curso con id "+id+" no se encuentra en la base de datos")
         );
     }
 
@@ -42,7 +42,7 @@ public class CursoServiceImpl implements CursoService{
     @Override
     public Curso update(Long id, Curso curso) {
         Curso cursoEncontrado = cursoRepository.findById(id)
-                .orElseThrow(() -> new CursoException("Curso con id "+id+" no encontrado"));
+                .orElseThrow(() -> new CursoException("Curso con id "+id+" no se encuentra en la base de datos"));
         cursoEncontrado.setNombreCurso(curso.getNombreCurso());
         cursoEncontrado.setDescripcionCurso(curso.getDescripcionCurso());
         cursoEncontrado.setPrecioCurso(curso.getPrecioCurso());

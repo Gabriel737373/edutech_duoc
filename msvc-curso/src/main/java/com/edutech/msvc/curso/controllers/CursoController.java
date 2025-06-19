@@ -16,6 +16,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.MediaTypes;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -51,7 +52,7 @@ public class CursoController {
                              "de no encontrar retorna una lista vacia")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Se retorno un curso OK"),
-            @ApiResponse(responseCode = "400", description = "Error - Curso con ID no encontrado",
+            @ApiResponse(responseCode = "404", description = "Error - Curso con ID no encontrado",
                          content = @Content(mediaType = "application/json",
                           schema = @Schema(implementation = ErrorDTO.class)))
     })
@@ -71,7 +72,7 @@ public class CursoController {
                     "y permite la creacion de Curso"
     )
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Curso creaco correctamente")
+            @ApiResponse(responseCode = "201", description = "Curso creado correctamente")
     })
     @io.swagger.v3.oas.annotations.parameters.RequestBody(
             required = true,
@@ -90,7 +91,25 @@ public class CursoController {
         return ResponseEntity.status(HttpStatus.CREATED).body(saved);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping(value = "/{id}", produces = MediaTypes.HAL_JSON_VALUE)
+    @Operation(
+            summary = "Endpoint que permite actualizar un Curso existente",
+            description = "Este endpoint recibe un JSON con los datos actualizados del Curso " +
+                    "y retorna el Curso modificado con los enlaces HATEOAS correspondientes."
+    )
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Curso actualizado correctamente",
+                    content = @Content(mediaType = MediaTypes.HAL_JSON_VALUE,
+                            schema = @Schema(implementation = Curso.class))),
+            @ApiResponse(responseCode = "404", description = "Error - Curso con ID no encontrado",
+                    content = @Content)
+    })
+    @io.swagger.v3.oas.annotations.parameters.RequestBody(
+            required = true,
+            description = "Debe contener los campos del Curso a actualizar",
+            content = @Content(mediaType = "application/json",
+                    schema = @Schema(implementation = Curso.class))
+    )
     public ResponseEntity<Curso> update(@PathVariable Long id, @Valid @RequestBody CursoDTO cursoDTO){
         Curso curso = new Curso();
         curso.setNombreCurso(cursoDTO.getNombreCurso());
@@ -101,6 +120,16 @@ public class CursoController {
     }
 
     @DeleteMapping("/{id}")
+    @Operation(
+            summary = "Eliminar un Curso por ID",
+            description = "Este endpoint permite eliminar un Curso existente a través de su ID. " +
+                    "Si el curso es eliminado exitosamente, retorna un código 204 sin contenido."
+    )
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204", description = "Curso eliminado correctamente"),
+            @ApiResponse(responseCode = "404", description = "Error - Curso con ID no encontrado",
+                    content = @Content)
+    })
     public ResponseEntity<Curso> delete(@PathVariable Long id){
         this.cursoService.deleteById(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
