@@ -3,6 +3,7 @@ package com.edutech.msvc.alumno.controllers;
 
 
 import com.edutech.msvc.alumno.dtos.AlumnoDTO;
+import com.edutech.msvc.alumno.dtos.ErrorDTO;
 import com.edutech.msvc.alumno.models.entities.Alumno;
 import com.edutech.msvc.alumno.services.AlumnoService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -12,6 +13,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.MediaTypes;
@@ -26,6 +28,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/alumnos")
 @Validated
+@Tag(name = "Alumno", description = "Metodos CRUD para Alumnos")
 public class AlumnoController {
 
     @Autowired
@@ -52,7 +55,9 @@ public class AlumnoController {
     )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Se retorna el Alumno encontrado"),
-            @ApiResponse(responseCode = "404", description = "Error - Alumno con ID no encontrado")
+            @ApiResponse(responseCode = "404", description = "Error - Alumno con ID no se encuentra en la base de datos",
+                    content = @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = ErrorDTO.class)))
     })
     @Parameters(value = {
             @Parameter(name = "id", description = "Este es el ID unico de un Alumno", required = true)

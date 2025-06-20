@@ -47,7 +47,7 @@ public class AlumnoServiceTest {
             this.alumnos.add(alumno);
         }
         this.alumnoPrueba = new Alumno(
-            1L, "Ariel Molina", "ari.milancam@gmail.com"
+            1L, "Ariel Molina", "ari.molinam@gmail.com"
         );
     }
 

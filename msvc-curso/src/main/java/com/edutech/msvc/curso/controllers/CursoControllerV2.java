@@ -32,7 +32,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 @RestController
 @RequestMapping("/api/v3/cursos")
 @Validated
-@Tag(name = "Cursos", description = "Metodos CRUD para cursos")
+@Tag(name = "Cursos-V2", description = "Metodos CRUD para cursos")
 public class CursoControllerV2 {
 
     @Autowired
