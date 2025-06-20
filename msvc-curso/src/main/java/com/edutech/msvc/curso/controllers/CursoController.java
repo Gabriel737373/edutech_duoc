@@ -52,13 +52,13 @@ public class CursoController {
                              "de no encontrar retorna una lista vacia")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Se retorno un curso OK"),
-            @ApiResponse(responseCode = "404", description = "Error - Curso con ID no encontrado",
+            @ApiResponse(responseCode = "404", description = "Error - Curso con ID no se encuentra en la base de datos",
                          content = @Content(mediaType = "application/json",
                           schema = @Schema(implementation = ErrorDTO.class)))
     })
     @Parameters(value = {
             @Parameter(name = "id",
-                       description = "Este es el id unico de un curso", required = true)
+                       description = "Este es el ID unico de un curso", required = true)
     })
     public ResponseEntity<Curso> findById(@PathVariable Long id){
         Curso curso = this.cursoService.findById(id);

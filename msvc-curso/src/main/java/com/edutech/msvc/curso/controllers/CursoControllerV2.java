@@ -118,7 +118,7 @@ public class CursoControllerV2 {
                     schema = @Schema(implementation = Curso.class)
             )
     )
-    public ResponseEntity<EntityModel<Curso>> create (@Valid @RequestBody Curso curso){
+    public ResponseEntity<EntityModel<Curso>> create (@Valid @RequestBody Curso curso) {
         Curso cursoNew = this.cursoService.save(curso);
         EntityModel<Curso> entityModel = this.cursoModelAssembler.toModel(cursoNew);
         return ResponseEntity

@@ -3,11 +3,8 @@ package com.edutech.msvc.curso.assemblers;
 import com.edutech.msvc.curso.controllers.CursoControllerV2;
 import com.edutech.msvc.curso.models.entities.Curso;
 import org.springframework.hateoas.EntityModel;
-import org.springframework.hateoas.Link;
 import org.springframework.hateoas.server.RepresentationModelAssembler;
 import org.springframework.stereotype.Component;
-
-import javax.swing.text.html.parser.Entity;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 
