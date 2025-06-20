@@ -3,6 +3,7 @@ package com.edutech.msvc.reporte.controllers;
 import com.edutech.msvc.reporte.dtos.ReporteDTO;
 import com.edutech.msvc.reporte.models.entities.Reporte;
 import com.edutech.msvc.reporte.services.ReporteService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,6 +16,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/reportes")
 @Validated
+@Tag(name="Reporte", description = "Metodos CRUD para Reportes")
 public class ReporteController {
 
     @Autowired

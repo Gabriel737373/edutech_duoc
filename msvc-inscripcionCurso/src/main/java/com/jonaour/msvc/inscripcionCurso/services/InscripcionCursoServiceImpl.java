@@ -97,8 +97,8 @@ public class InscripcionCursoServiceImpl implements InscripcionCursoService{
     public List<InscripcionCurso> findAll(){
         return this.inscripcionCursoRepository.findAll();
     }
+    */
 
-     */
 
 
     @Override
