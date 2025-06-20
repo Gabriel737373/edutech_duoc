@@ -1,4 +1,4 @@
-package com.edutech_duoc.msvc_profesor.controller;
+package com.edutech.msvc.evaluacion.controller;
 
 import com.jayway.jsonpath.DocumentContext;
 import com.jayway.jsonpath.JsonPath;
@@ -12,19 +12,19 @@ import org.springframework.http.ResponseEntity;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class ProfesorControllerTest {
+public class EvaluacionControllerTest {
 
     @Autowired
     TestRestTemplate testRestTemplate;
 
     @Test
-    public void shouldReturnAllProfesoresWhenListIsRequested(){
+    public void shouldReturnAllEvaluacionesWhenListIsRequested(){
 
         ResponseEntity<String> response = testRestTemplate.getForEntity("/api/v2/profesores", String.class);
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
 
         DocumentContext documentContext = JsonPath.parse(response.getBody());
-        int profesoresCount = documentContext.read("$.length()");
-        assertThat(profesoresCount).isEqualTo(1000);
+        int evaluacionCount = documentContext.read("$.length()");
+        assertThat(evaluacionCount).isEqualTo(1000);
     }
 }
