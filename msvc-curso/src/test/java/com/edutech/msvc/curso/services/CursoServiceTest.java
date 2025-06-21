@@ -127,4 +127,42 @@ public class  CursoServiceTest {
         verify(cursoRepository, times(1)).save(any(Curso.class));
     }
 
+    @Test
+    @DisplayName("Debe actualizar un curso existente")
+    public void shouldUpdateCurso() {
+        Long idCurso = 1L;
+
+        Curso cursoActualizado = new Curso(
+                idCurso, "Curso Actualizado", "Contenido actualizado", 200000
+        );
+
+        when(cursoRepository.findById(idCurso)).thenReturn(Optional.of(this.cursoPrueba));
+        when(cursoRepository.save(any(Curso.class))).thenReturn(cursoActualizado);
+
+        Curso result = cursoService.update(idCurso, cursoActualizado);
+
+        assertThat(result).isNotNull();
+        assertThat(result.getNombreCurso()).isEqualTo("Curso Actualizado");
+        assertThat(result.getDescripcionCurso()).isEqualTo("Contenido actualizado");
+        assertThat(result.getPrecioCurso()).isEqualTo(200000);
+
+        verify(cursoRepository).findById(idCurso);
+        verify(cursoRepository).save(any(Curso.class));
+    }
+
+    @Test
+    @DisplayName("Debe eliminar un curso por ID")
+    public void shouldDeleteCursoById() {
+        Long idCurso = 1L;
+
+        when(cursoRepository.findById(idCurso)).thenReturn(Optional.of(this.cursoPrueba));
+        doNothing().when(cursoRepository).deleteById(idCurso);
+
+        cursoService.deleteById(idCurso);
+
+        verify(cursoRepository, times(1)).findById(idCurso);
+        verify(cursoRepository, times(1)).deleteById(idCurso);
+    }
+
+
 }

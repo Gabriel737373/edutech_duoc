@@ -97,4 +97,41 @@ public class AlumnoServiceTest {
         verify(alumnoRepository, times(1)).save(any(Alumno.class));
     }
 
+    @Test
+    @DisplayName("Debe actualizar un Alumno existente")
+    public void shouldUpdateAlumno() {
+        Long idAlumno = 1L;
+
+        Alumno alumnoExistente = new Alumno(idAlumno, "Juan Pérez", "juan.perez@gmail.com");
+        Alumno alumnoActualizado = new Alumno(idAlumno, "Ariel Molina", "ari.molinam@gmail.com");
+
+        when(alumnoRepository.findById(idAlumno)).thenReturn(Optional.of(alumnoExistente));
+        when(alumnoRepository.save(any(Alumno.class))).thenReturn(alumnoActualizado);
+
+        Alumno result = alumnoService.update(idAlumno, alumnoActualizado);
+
+        assertThat(result.getNombreCompleto()).isEqualTo("Ariel Molina");
+        assertThat(result.getCorreo()).isEqualTo("ari.molinam@gmail.com");
+
+        verify(alumnoRepository, times(1)).findById(idAlumno);
+        verify(alumnoRepository, times(1)).save(any(Alumno.class));
+    }
+
+    @Test
+    @DisplayName("Debe eliminar un Alumno por ID")
+    public void shouldDeleteAlumnoById() {
+        Long idAlumno = 1L;
+
+        // Simular que el alumno existe
+        when(alumnoRepository.findById(idAlumno)).thenReturn(Optional.of(this.alumnoPrueba));
+
+        alumnoService.deleteById(idAlumno);
+
+        verify(alumnoRepository, times(1)).findById(idAlumno);
+        verify(alumnoRepository, times(1)).deleteById(idAlumno);
+    }
+
+
+
+
 }
