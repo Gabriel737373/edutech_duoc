@@ -140,7 +140,7 @@ public class InscripcionCursoServiceTest {
     public void shouldFindAllInscripcionCurso() {
         this.inscripcionCursos.add(this.inscripcionCursoTest);
         when(inscripcionCursoRepository.findAll()).thenReturn(this.inscripcionCursos);
-        List<InscripcionCursoDTO> result=inscripcionCursoService.findAll(); //verificar DTO
+        List<InscripcionCurso> result=inscripcionCursoService.findAll(); //verificar DTO
 
         assertThat(result).hasSize(101);
         assertThat(result).contains(this.inscripcionCursoTest); //verificar DTO
