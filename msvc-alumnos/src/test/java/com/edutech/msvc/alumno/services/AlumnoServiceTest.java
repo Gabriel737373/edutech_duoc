@@ -38,7 +38,7 @@ public class AlumnoServiceTest {
     @BeforeEach
     public void setUp() {
         Faker faker = new Faker(Locale.of("es", "CL"));
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < 1000; i++) {
             Alumno alumno = new Alumno();
             alumno.setIdAlumno((long) i);
             alumno.setNombreCompleto(faker.name().fullName());

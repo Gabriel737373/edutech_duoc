@@ -60,7 +60,7 @@ public class LoadDataBase implements CommandLineRunner {
             );
 
             // Crear y guardar cursos
-            for (int i = 0; i < 10000; i++) {
+            for (int i = 0; i < 1000; i++) {
                 Curso curso = new Curso();
 
                 // Asigna un nombre de curso aleatorio de la lista

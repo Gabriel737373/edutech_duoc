@@ -23,7 +23,7 @@ public class CursoControllerTest {
 
         DocumentContext documentContext = JsonPath.parse(response.getBody());
         int cursosCount = documentContext.read("$.length()");
-        assertThat(cursosCount).isEqualTo(10000);
+        assertThat(cursosCount).isEqualTo(1000);
 
 
     }

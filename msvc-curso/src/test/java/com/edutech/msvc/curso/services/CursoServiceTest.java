@@ -65,7 +65,7 @@ public class  CursoServiceTest {
         );
 
         // Inicializar lista de cursos
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < 1000; i++) {
             Curso curso = new Curso();
             curso.setIdCurso((long) i);
             curso.setNombreCurso(nombresDeCursos.get(faker.random().nextInt(nombresDeCursos.size())));
