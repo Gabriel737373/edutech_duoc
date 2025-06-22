@@ -1,7 +1,9 @@
 package com.edutech_duoc.msvc_profesor.services;
 
+import com.edutech_duoc.msvc_profesor.exceptions.ProfesorException;
 import com.edutech_duoc.msvc_profesor.models.entities.Profesor;
 import com.edutech_duoc.msvc_profesor.repositories.ProfesorRepository;
+import net.datafaker.Faker;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -11,10 +13,13 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
+import java.util.Optional;
 
-import static org.mockito.Mockito.when;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class ProfesorServiceTest {
@@ -31,20 +36,53 @@ public class ProfesorServiceTest {
 
     @BeforeEach
     public void setUp(){
-        this.profesorPrueba = new Profesor(1L, "11111111-1", "Emanuel perez", "Emanuel@gmail.com"
+        Faker faker = new Faker(Locale.of("es","cl"));
+        for (int i = 0; i < 100; i++){
+            Profesor profesor =new Profesor();
+            profesor.setIdProfesor((long) i);
+            profesor.setNombreProfesor(faker.name().fullName());
+            profesor.setCorreoProfesor(faker.internet().emailAddress() + "_" + i);
+
+            this.profesores.add(profesor);
+        }
+        this.profesorPrueba = new Profesor(
+                1L, "Gab", "Velasquez", "ga.velasquezm@duocuc.cl"
         );
     }
 
     @Test
     @DisplayName("Debe listar todos los profesores")
-    public void shouldFindAllProfesores(){
-        Profesor otroProfesor = new Profesor(2L, "22222222-2", "Gonzalo perez", "Gonzalo@gmail.com"
-        );
-
-        List<Profesor> listadoProfesores = Arrays.asList(this.profesorPrueba, otroProfesor);
-
-        when(profesorRepository.findAll()).thenReturn(listadoProfesores);
-
+    public void shouldFindAllProfesores() {
+        this.profesores.add(this.profesorPrueba);
+        when(profesorRepository.findAll()).thenReturn(this.profesores);
         List<Profesor> result = profesorService.findAll();
+
+        assertThat(result).hasSize(101);
+        assertThat(result).contains(this.profesorPrueba);
+        verify(profesorRepository, times(1)).findAll();
     }
+
+    @Test
+    @DisplayName("Debe de retornar la excepcion en caso de que el profesor no exista")
+    public void shoulNotFindAlumnoById(){
+        Long idInexistente = 999L;
+        when(profesorRepository.findById(idInexistente)).thenReturn(Optional.empty());
+        assertThatThrownBy(() -> {
+            profesorService.findById(idInexistente);
+        }).isInstanceOf(ProfesorException.class)
+                .hasMessageContaining("El profesor con id " + idInexistente + " no existe en la base de datos");
+        verify(profesorRepository, times(1)).findById(idInexistente);
+
+    }
+
+    @Test
+    @DisplayName("Debe guardar los nuevos profesores")
+    public void shoulSaveProfesor(){
+        when(profesorRepository.save(any(Profesor.class))).thenReturn(this.profesorPrueba);
+        Profesor result = profesorService.save(this.profesorPrueba);
+        assertThat(result).isNotNull();
+        assertThat(result).isEqualTo(this.profesorPrueba);
+        verify(profesorRepository, times(1)).save(any(Profesor.class));
+    }
+
 }
