@@ -40,7 +40,7 @@ public class LoadDataBase implements CommandLineRunner {
                     "Gestión de Proyectos",
                     "Análisis de Datos en Ciencias Sociales",
                     "Desarrollo Web con Java",
-                    "Ciberseguridad: Protección de Sistemas",
+                        "Ciberseguridad: Protección de Sistemas",
                     "Inteligencia Artificial y Aprendizaje Automático",
                     "Fundamentos de Electrónica"
             );

@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class GerenteCursoImpl implements GerenteCursoService {
+public class GerenteCursoServiceImpl implements GerenteCursoService {
 
     @Autowired
     private GerenteCursoRepository gerenteRepository;
