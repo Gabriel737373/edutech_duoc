@@ -4,13 +4,12 @@ import com.edutech.msvc.evaluacion.exceptions.EvaluacionException;
 import com.edutech.msvc.evaluacion.models.entities.Evaluacion;
 import com.edutech.msvc.evaluacion.repositories.EvaluacionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.expression.EvaluationException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class EvaluacionServiceMpl implements EvaluacionService{
+public class EvaluacionServiceImpl implements EvaluacionService{
 
     @Autowired
     private EvaluacionRepository evaluacionRepository;

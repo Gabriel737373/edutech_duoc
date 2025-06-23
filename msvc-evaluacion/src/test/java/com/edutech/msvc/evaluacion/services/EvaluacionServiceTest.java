@@ -25,7 +25,7 @@ public class EvaluacionServiceTest {
     private EvaluacionRepository evaluacionRepository;
 
     @InjectMocks
-    private EvaluacionServiceMpl evaluacionServiceMpl;
+    private EvaluacionServiceImpl evaluacionService;
 
     private Evaluacion evaluacionPrueba;
 
@@ -78,7 +78,7 @@ public class EvaluacionServiceTest {
     public void shouldFindAllEvaluaciones(){
         this.evaluaciones.add(this.evaluacionPrueba);
         when(evaluacionRepository.findAll()).thenReturn(this.evaluaciones);
-        List<Evaluacion> result = evaluacionServiceMpl.findAll();
+        List<Evaluacion> result = evaluacionService.findAll();
 
         assertThat(result).hasSize(101);
         assertThat(result).contains(this.evaluacionPrueba);
@@ -91,7 +91,7 @@ public class EvaluacionServiceTest {
         Long idInexistente = 999L;
         when(evaluacionRepository.findById(idInexistente)).thenReturn(Optional.empty());
         assertThatThrownBy(() -> {
-            evaluacionServiceMpl.findById(idInexistente);
+            evaluacionService.findById(idInexistente);
         }).isInstanceOf(EvaluacionException.class)
                 .hasMessageContaining("El evaluacion con id " + idInexistente
                         + "no se encuentra en la base de datos");
@@ -102,7 +102,7 @@ public class EvaluacionServiceTest {
     @DisplayName("Debe guardar un nuevo Evaluacion")
     public void shouldSaveCurso(){
         when(evaluacionRepository.save(any(Evaluacion.class))).thenReturn(this.evaluacionPrueba);
-        Evaluacion result = evaluacionServiceMpl.save(this.evaluacionPrueba);
+        Evaluacion result = evaluacionService.save(this.evaluacionPrueba);
         assertThat(result).isNotNull();
         assertThat(result).isEqualTo(this.evaluacionPrueba);
         verify(evaluacionRepository, times(1)).save(any(Evaluacion.class));

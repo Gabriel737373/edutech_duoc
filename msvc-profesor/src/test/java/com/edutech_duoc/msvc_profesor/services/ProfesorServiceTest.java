@@ -63,17 +63,30 @@ public class ProfesorServiceTest {
     }
 
     @Test
+    @DisplayName("Debe de listar a un profesor mediante ID")
+    public void shoulFindProfesorById(){
+        when(profesorRepository.findById(1L)).thenReturn(Optional.of(this.profesorPrueba));
+        Profesor result = profesorService.findById(1L);
+        assertThat(result).isNotNull();
+        assertThat(result).isEqualTo(this.profesorPrueba);
+
+        verify(profesorRepository, times( 1)).findById(1L);
+    }
+
+    @Test
     @DisplayName("Debe de retornar la excepcion en caso de que el profesor no exista")
-    public void shoulNotFindAlumnoById(){
-        Long idInexistente = 999L;
+    public void shoulNotFindProfesorById(){
+        Long idInexistente = 99L;
         when(profesorRepository.findById(idInexistente)).thenReturn(Optional.empty());
         assertThatThrownBy(() -> {
             profesorService.findById(idInexistente);
         }).isInstanceOf(ProfesorException.class)
-                .hasMessageContaining("El profesor con id " + idInexistente + " no existe en la base de datos");
+                .hasMessageContaining("Profesor con id " + idInexistente + " no encontrado");
         verify(profesorRepository, times(1)).findById(idInexistente);
 
     }
+
+
 
     @Test
     @DisplayName("Debe guardar los nuevos profesores")
@@ -84,5 +97,40 @@ public class ProfesorServiceTest {
         assertThat(result).isEqualTo(this.profesorPrueba);
         verify(profesorRepository, times(1)).save(any(Profesor.class));
     }
+
+    @Test
+    @DisplayName("Debe actualizar a un profesor ya existente")
+    public void shouldUpdateProfesor(){
+        Long idProfesor = 1L;
+
+        Profesor profesorExistente = new Profesor(idProfesor, "Benito", "Camelo","benitocamelo@gmail.com");
+        Profesor profesorActualizado = new Profesor(idProfesor, "Gabriel", "Velasquez", "ga.velasquezm@duocuc.cl");
+
+        when(profesorRepository.findById(idProfesor)).thenReturn(Optional.of(profesorExistente));
+        when(profesorRepository.save(any(Profesor.class))).thenReturn(profesorActualizado);
+
+        Profesor result = profesorService.update(idProfesor, profesorActualizado);
+
+        assertThat(result.getNombreProfesor()).isEqualTo("Gabriel");
+        assertThat(result.getApellidoProfesor()).isEqualTo("Velasquez");
+        assertThat(result.getCorreoProfesor()).isEqualTo("ga.velasquezm@duocuc.cl");
+
+        verify(profesorRepository, times(1)).findById(idProfesor);
+        verify(profesorRepository, times(1)).save(any(Profesor.class));
+
+    }
+
+    @Test
+    @DisplayName("Diebe eliminar a un Profesor por ID")
+    public void shouldDeleteProfesorById(){
+
+        Long idProfesor = 1L;
+
+        doNothing().when(profesorRepository).deleteById(idProfesor);
+        profesorService.deleteById(idProfesor);
+
+        verify(profesorRepository, times(1 )).deleteById(idProfesor);
+    }
+
 
 }
