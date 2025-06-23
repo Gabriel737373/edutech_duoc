@@ -162,9 +162,8 @@ public class CursoControllerV2 {
                     "Si el curso es eliminado exitosamente, retorna un código 204 sin contenido."
     )
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "204", description = "Curso eliminado correctamente"),
-            @ApiResponse(responseCode = "404", description = "Error - Curso con ID no encontrado",
-                    content = @Content)
+            @ApiResponse(responseCode = "204", description = "Curso eliminado correctamente", content = @Content),
+            @ApiResponse(responseCode = "404", description = "Error - Curso con ID no encontrado", content = @Content)
     })
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         this.cursoService.deleteById(id);
