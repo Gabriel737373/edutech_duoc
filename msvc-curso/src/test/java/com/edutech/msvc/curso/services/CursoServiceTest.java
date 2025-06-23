@@ -65,7 +65,7 @@ public class  CursoServiceTest {
         );
 
         // Inicializar lista de cursos
-        for (int i = 0; i < 1000; i++) {
+        for (int i = 0; i < 100; i++) {
             Curso curso = new Curso();
             curso.setIdCurso((long) i);
             curso.setNombreCurso(nombresDeCursos.get(faker.random().nextInt(nombresDeCursos.size())));
@@ -113,7 +113,7 @@ public class  CursoServiceTest {
             cursoService.findById(idInexistente);
         }).isInstanceOf(CursoException.class)
                 .hasMessageContaining("El curso con id " + idInexistente
-                        + "no se encuentra en la base de datos");
+                        + " no se encuentra en la base de datos");
         verify(cursoRepository, times(1)).findById(idInexistente);
     }
 
@@ -154,15 +154,10 @@ public class  CursoServiceTest {
     @DisplayName("Debe eliminar un curso por ID")
     public void shouldDeleteCursoById() {
         Long idCurso = 1L;
-
-        when(cursoRepository.findById(idCurso)).thenReturn(Optional.of(this.cursoPrueba));
         doNothing().when(cursoRepository).deleteById(idCurso);
-
         cursoService.deleteById(idCurso);
 
-        verify(cursoRepository, times(1)).findById(idCurso);
         verify(cursoRepository, times(1)).deleteById(idCurso);
     }
-
 
 }

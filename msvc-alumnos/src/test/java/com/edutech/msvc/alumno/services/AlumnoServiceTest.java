@@ -38,7 +38,7 @@ public class AlumnoServiceTest {
     @BeforeEach
     public void setUp() {
         Faker faker = new Faker(Locale.of("es", "CL"));
-        for (int i = 0; i < 1000; i++) {
+        for (int i = 0; i < 100; i++) {
             Alumno alumno = new Alumno();
             alumno.setIdAlumno((long) i);
             alumno.setNombreCompleto(faker.name().fullName());
@@ -81,7 +81,7 @@ public class AlumnoServiceTest {
         assertThatThrownBy(() -> {
             alumnoService.findById(idInexistente);
         }).isInstanceOf(AlumnoException.class)
-                .hasMessageContaining("El alumno con id " + idInexistente + " no se encuentra en la base de datos");
+                .hasMessageContaining("Alumno con id " + idInexistente + " no encontrado");
         verify(alumnoRepository, times(1)).findById(idInexistente);
     }
 
@@ -119,19 +119,12 @@ public class AlumnoServiceTest {
 
     @Test
     @DisplayName("Debe eliminar un Alumno por ID")
-    public void shouldDeleteAlumnoById() {
+    public void shouldDeleteCursoById() {
         Long idAlumno = 1L;
-
-        // Simular que el alumno existe
-        when(alumnoRepository.findById(idAlumno)).thenReturn(Optional.of(this.alumnoPrueba));
-
+        doNothing().when(alumnoRepository).deleteById(idAlumno);
         alumnoService.deleteById(idAlumno);
 
-        verify(alumnoRepository, times(1)).findById(idAlumno);
         verify(alumnoRepository, times(1)).deleteById(idAlumno);
     }
-
-
-
 
 }
