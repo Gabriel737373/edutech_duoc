@@ -108,4 +108,37 @@ public class EvaluacionServiceTest {
         verify(evaluacionRepository, times(1)).save(any(Evaluacion.class));
     }
 
+    @Test
+    @DisplayName("Debe actualizar una evaluacion ya existente")
+    public void shouldUpdateEvaluacion(){
+        Long idEvaluacion = 1L;
+
+        Evaluacion evaluacionExistente = new Evaluacion(idEvaluacion, "Prueba Inicial", "Base de datos");
+        Evaluacion evaluacionActualizado = new Evaluacion(idEvaluacion, "Prueba Inicial", "Fullstack");
+
+        when(evaluacionRepository.findById(idEvaluacion)).thenReturn(Optional.of(evaluacionExistente));
+        when(evaluacionRepository.save(any(Evaluacion.class))).thenReturn(evaluacionActualizado);
+
+        Evaluacion result = evaluacionService.update(idEvaluacion, evaluacionActualizado);
+
+        assertThat(result.getNombreEvaluacion()).isEqualTo("Prueba Inicial");
+        assertThat(result.getMateriaEvaluacion()).isEqualTo("Fullstack");
+
+        verify(evaluacionRepository, times(1)).findById(idEvaluacion);
+        verify(evaluacionRepository, times(1)).save(any(Evaluacion.class));
+
+    }
+
+    @Test
+    @DisplayName("Diebe eliminar una evaluacion por ID")
+    public void shouldDeleteEvaluacionById(){
+
+        Long idEvaluacion = 1L;
+
+        doNothing().when(evaluacionRepository).deleteById(idEvaluacion);
+        evaluacionService.deleteById(idEvaluacion);
+
+        verify(evaluacionRepository, times(1 )).deleteById(idEvaluacion);
+    }
+
 }
