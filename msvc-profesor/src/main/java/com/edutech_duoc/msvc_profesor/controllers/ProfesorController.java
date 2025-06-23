@@ -180,6 +180,13 @@ public class ProfesorController {
                     responseCode = "404",
                     description = "Hubo algun error en el prompt a la hora de ingresarlo",
                     content = @Content
+            ),
+            @ApiResponse(
+                    responseCode = "409",
+                    description = "El usuario ya existe",
+                    content = @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = ErrorDTO.class)
+                    )
             )
     } )
     public ResponseEntity<Profesor> delete(@PathVariable Long id){

@@ -119,6 +119,13 @@ public class EvaluacionController {
                     content = @Content(mediaType = "application/json",
                             schema = @Schema(implementation = ErrorDTO.class)
                     )
+            ),
+            @ApiResponse(
+                    responseCode = "409",
+                    description = "La evaluacion ya existe",
+                    content = @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = ErrorDTO.class)
+                    )
             )
     } )
     @io.swagger.v3.oas.annotations.parameters.RequestBody(
