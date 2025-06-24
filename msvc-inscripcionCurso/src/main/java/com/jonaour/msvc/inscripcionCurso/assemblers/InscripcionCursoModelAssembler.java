@@ -18,9 +18,10 @@ public class InscripcionCursoModelAssembler implements RepresentationModelAssemb
                 entity,
                 linkTo(methodOn(InscripcionCursoControllerV2.class).findById(entity.getIdInscripcionCurso())).withSelfRel(),
                 linkTo(methodOn(InscripcionCursoControllerV2.class).findAll()).withRel("inscripcionCursos"),
-                Link.of("http://localhost:8081/api/v2/alumnos/"+entity.getIdAlumno()).withRel("alumnos")
+                Link.of("http://localhost:8081/api/v2/alumnos/"+entity.getIdAlumno()).withRel("alumnos"),
+                Link.of("http://localhost:8084/api/v2/cursos/"+entity.getIdCurso()).withRel("cursos")
         );
     }
 }
 
-//AGREGAR CURSOS - PROFE -
+//AGREGAR PROFE - GERENTE CURSO
