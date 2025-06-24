@@ -12,7 +12,7 @@ import org.springframework.http.ResponseEntity;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class ProfesorControllerV2Test {
+public class ProfesorControllerTest {
 
     @Autowired
     TestRestTemplate testRestTemplate;
@@ -20,7 +20,7 @@ public class ProfesorControllerV2Test {
     @Test
     public void shouldReturnAllProfesoresWhenListIsRequested(){
 
-        ResponseEntity<String> response = testRestTemplate.getForEntity("/api/v2/profesores", String.class);
+        ResponseEntity<String> response = testRestTemplate.getForEntity("/api/v1/profesores", String.class);
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
 
         DocumentContext documentContext = JsonPath.parse(response.getBody());

@@ -1,5 +1,6 @@
 package com.edutech_duoc.msvc_profesor.models.entities;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
@@ -13,18 +14,22 @@ public class Profesor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_profesor")
+    @Schema(description = "Primary key profesor", example = "1")
     private Long idProfesor;
 
     @Column(nullable = false)
     @NotBlank(message = "El campo no puede estar vacio")
+    @Schema(description = "Nombre del profesor",example = "Gabriel")
     private String nombreProfesor;
 
     @Column(nullable = false)
     @NotBlank(message = "El campo no puede estar vacio")
+    @Schema(description = "Apellido del profesor", example = "Velasquez")
     private String apellidoProfesor;
 
     @Column(nullable = false, unique = true)
     @NotBlank(message = "El campo no puede estar vacio")
+    @Schema(description = "Correo del profesor", example = "ga.velasquezm@duocuc.cl")
     private String correoProfesor;
 
     //¿Cómo hacer Sopaipillas?

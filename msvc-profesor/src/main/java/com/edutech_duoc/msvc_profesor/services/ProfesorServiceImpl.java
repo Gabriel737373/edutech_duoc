@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ProfesorServiceImpl implements ProfesorService{
@@ -30,8 +31,13 @@ public class ProfesorServiceImpl implements ProfesorService{
 
     @Override
     public Profesor save(Profesor profesor) {
-        return this.profesorRepository.save(profesor);
+        Optional<Profesor> profesorExistente = profesorRepository.findByCorreoProfesor(profesor.getCorreoProfesor());
 
+        if (profesorExistente.isPresent()){
+            throw new ProfesorException("Profesor existente");
+        }
+
+        return profesorRepository.save(profesor);
     }
 
     @Override
