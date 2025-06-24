@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AlumnoServiceImpl implements AlumnoService{
@@ -29,7 +30,13 @@ public class AlumnoServiceImpl implements AlumnoService{
     // Guardar Alumno
     @Override
     public Alumno save(Alumno alumno) {
-        return this.alumnoRepository.save(alumno);
+        Optional<Alumno> alumnoExistente = alumnoRepository.findByCorreo(alumno.getCorreo());
+
+        if (alumnoExistente.isPresent()) {
+            throw new AlumnoException("Alumno existente");
+        }
+
+        return alumnoRepository.save(alumno);
     }
 
     // Eliminar Alumno por Id
