@@ -29,7 +29,6 @@ public class GerenteCursoServiceImpl implements GerenteCursoService {
     }
 
     // Metodo para guardar gerentes
-
     @Override
     public GerenteCurso save(GerenteCurso gerenteCurso) {
         if (gerenteCurso.getIdGerenteCurso() != null &&
@@ -39,7 +38,6 @@ public class GerenteCursoServiceImpl implements GerenteCursoService {
         gerenteCurso.setIdGerenteCurso(null);
         return this.gerenteRepository.save(gerenteCurso);
     }
-
 
     // Metodo para eliminar gerentes por id
     @Override
