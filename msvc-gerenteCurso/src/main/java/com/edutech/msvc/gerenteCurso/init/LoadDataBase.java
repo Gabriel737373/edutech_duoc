@@ -25,7 +25,7 @@ public class LoadDataBase implements CommandLineRunner {
     public void run(String... args) throws Exception {
         Faker faker = new Faker(Locale.of("es","CL"));
         if(gerenteCursoRepository.count() == 0) {
-            for(int i = 0; i < 10000; i++){
+            for(int i = 0; i < 1000; i++){
                 GerenteCurso gerenteCurso = new GerenteCurso();
                 gerenteCurso.setNombreCompleto(faker.name().fullName());
                 gerenteCurso = gerenteCursoRepository.save(gerenteCurso);

@@ -19,7 +19,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(GerenteCursoException.class)
     public ResponseEntity<ErrorDTO> handleGerenteCursoException(GerenteCursoException exception) {
 
-        if (exception.getMessage().contains("no se encuentra en la base de datos")) {
+        if (exception.getMessage().contains("no encontrado")) {
             Map<String, String> errorMap = Collections.singletonMap("Gerente no encontrado", exception.getMessage());
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body(this.createErrorDTO(HttpStatus.NOT_FOUND, new Date(), errorMap));

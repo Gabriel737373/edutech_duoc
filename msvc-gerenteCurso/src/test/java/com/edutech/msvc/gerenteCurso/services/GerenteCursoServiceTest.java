@@ -49,7 +49,7 @@ public class GerenteCursoServiceTest {
 
     @Test
     @DisplayName("Debe listar todos los gerentes")
-    public void shouldFindAllGerentes() {
+    public void shouldFindAllGerenteCursos() {
         this.gerenteCursos.add(this.gerenteCursoPrueba);
         when(gerenteCursoRepository.findAll()).thenReturn(this.gerenteCursos);
         List<GerenteCurso> result = gerenteCursoService.findAll();
@@ -60,8 +60,39 @@ public class GerenteCursoServiceTest {
     }
 
     @Test
+    @DisplayName("Debe guardar un nuevo gerente")
+    public void shouldSaveGerenteCurso() {
+        when(gerenteCursoRepository.save(any(GerenteCurso.class))).thenReturn(this.gerenteCursoPrueba);
+        GerenteCurso result = gerenteCursoService.save(this.gerenteCursoPrueba);
+        assertThat(result).isNotNull();
+        assertThat(result).isEqualTo(this.gerenteCursoPrueba);
+        verify(gerenteCursoRepository, times(1)).save(any(GerenteCurso.class));
+    }
+
+    @Test
+    @DisplayName("Debe actualizar un gerente existente")
+    public void shouldUpdateGerenteCurso() {
+        Long idGerenteCurso = 1L;
+
+        GerenteCurso GerenteCursoActualizado = new GerenteCurso(
+                idGerenteCurso, "José Antonio Pérez Ruiz"
+        );
+
+        when(gerenteCursoRepository.findById(idGerenteCurso)).thenReturn(Optional.of(this.gerenteCursoPrueba));
+        when(gerenteCursoRepository.save(any(GerenteCurso.class))).thenReturn(GerenteCursoActualizado);
+
+        GerenteCurso result = gerenteCursoService.update(idGerenteCurso, GerenteCursoActualizado);
+
+        assertThat(result).isNotNull();
+        assertThat(result.getNombreCompleto()).isEqualTo("José Antonio Pérez Ruiz");
+
+        verify(gerenteCursoRepository).findById(idGerenteCurso);
+        verify(gerenteCursoRepository).save(any(GerenteCurso.class));
+    }
+
+    @Test
     @DisplayName("Debe encontrar gerentes por id")
-    public void shouldFindGerenteById() {
+    public void shouldFindGerenteCursoById() {
         when(gerenteCursoRepository.findById(1L)).thenReturn(Optional.of(this.gerenteCursoPrueba));
         GerenteCurso result = gerenteCursoService.findById(1L);
         assertThat(result).isNotNull();
@@ -71,5 +102,16 @@ public class GerenteCursoServiceTest {
 
     @Test
     @DisplayName("Debe entregar una excepcion cuando gerente id no exista")
-    public void shouldNotFindGerenteById() {}
+    public void shouldNotFindGerenteCursoById() {}
+
+    @Test
+    @DisplayName("Debe eliminar un curso por ID")
+    public void shouldDeleteGerenteCursoById() {
+        Long idGerenteCurso = 1L;
+
+        doNothing().when(gerenteCursoRepository).deleteById(idGerenteCurso);
+        gerenteCursoService.deleteById(idGerenteCurso);
+
+        verify(gerenteCursoRepository, times(1)).deleteById(idGerenteCurso);
+    }
 }

@@ -27,7 +27,7 @@ public class GerenteCursoControllerTest {
 
         DocumentContext documentContext = JsonPath.parse(response.getBody());
         int gerentesCount = documentContext.read("$.length()");
-        assertThat(gerentesCount).isEqualTo(10000);
+        assertThat(gerentesCount).isEqualTo(1000);
     }
 
 }
