@@ -28,7 +28,7 @@ import java.util.List;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 
 @RestController
-@RequestMapping("/api/v2/inscripcionesCursos")
+@RequestMapping("/api/v2/inscripcionCursos")
 @Validated
 @Tag(name = "InscripcionesCurso-V2",description = "Metodos CRUD para inscripcion curso")
 public class InscripcionCursoControllerV2 {
