@@ -70,7 +70,16 @@ public class EvaluacionController {
                     "y permite la creacion de una Evaluacion"
     )
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Evaluacion creada correctamente")
+            @ApiResponse(
+                    responseCode = "201",
+                    description = "Evaluacion creada correctamente"),
+            @ApiResponse(
+                    responseCode = "409",
+                    description = "La evaluacion ya existe",
+                    content = @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = ErrorDTO.class)
+                    )
+            )
     })
     @io.swagger.v3.oas.annotations.parameters.RequestBody(
             required = true,

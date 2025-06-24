@@ -70,7 +70,16 @@ public class ProfesorController {
                     "y permite la creacion de un Profesor"
     )
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Profesor creado correctamente")
+            @ApiResponse(
+                    responseCode = "201",
+                    description = "Profesor creado correctamente"),
+            @ApiResponse(
+                    responseCode = "409",
+                    description = "El profesor ya existe",
+                    content = @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = ErrorDTO.class)
+                    )
+            )
     })
     @io.swagger.v3.oas.annotations.parameters.RequestBody(
             required = true,
