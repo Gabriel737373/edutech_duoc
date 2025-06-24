@@ -13,7 +13,7 @@ public interface InscripcionCursoService {
     List<InscripcionCurso> findbyProfesorId(Long profesorId);
     List<InscripcionCurso> findbyCursoId(Long cursoId);
     List<InscripcionCurso> findByGerenteCursoId(Long gerenteCursoId);
-    List<InscripcionCursoDTO> findAll();
+    List<InscripcionCurso> findAll();
     void deleteById(Long id);
     InscripcionCurso update(Long id, InscripcionCurso inscripcionCurso);
 

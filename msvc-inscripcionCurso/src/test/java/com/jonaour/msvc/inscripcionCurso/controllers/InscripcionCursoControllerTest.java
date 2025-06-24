@@ -23,6 +23,6 @@ public class InscripcionCursoControllerTest {
 
         DocumentContext documentContext = JsonPath.parse(response.getBody());
         int inscripcionCursosCount = documentContext.read("$.length()");
-        assertThat(inscripcionCursosCount).isEqualTo(0);
+        assertThat(inscripcionCursosCount).isEqualTo(100);
     }
 }

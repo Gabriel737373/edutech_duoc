@@ -31,10 +31,17 @@ public class InscripcionCursoController {
     @Autowired
     private InscripcionCursoService inscripcionCursoService;
 
-    //VERIFICAR DTO
     @GetMapping
-    public ResponseEntity<List<InscripcionCursoDTO>> findAll(){
-        return ResponseEntity.status(HttpStatus.OK).body(this.inscripcionCursoService.findAll());
+    @Operation(
+            summary = "Devuelve todas las inscripciones de curso",
+            description = "Este metodo retorna una lista de inscripciones curso. en caso "+"de que no encuentre nada, retornara una lista vacía"
+    )
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Se retornaros todas las inscripciones curso")
+    })
+    public ResponseEntity<List<InscripcionCurso>> findAll(){
+        List<InscripcionCurso> inscripcionCursos = this.inscripcionCursoService.findAll();
+        return ResponseEntity.status(HttpStatus.OK).body(inscripcionCursos);
     }
 
     //Metodo find by id inscripcion curso

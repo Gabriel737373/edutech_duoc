@@ -11,7 +11,7 @@ public class SwaggerConfig {
     public OpenAPI customOpenAPI() {
         return new OpenAPI()
                 .info(new Info()
-                        .title("API RESTful - MSCV - Alumnos")
+                        .title("API RESTful - MSCV - Inscripciones Cursos")
                         .description("API dedicada al mscv de Inscripcion Curso")
                         .version("1.0.0")
                 );
