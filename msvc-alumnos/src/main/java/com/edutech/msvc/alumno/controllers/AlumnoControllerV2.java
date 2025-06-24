@@ -109,7 +109,7 @@ public class AlumnoControllerV2 {
             ),
             @ApiResponse(
                     responseCode = "409",
-                    description = "El usuario ya existe",
+                    description = "Este alumno ya existe",
                     content = @Content(mediaType = "application/json",
                             schema = @Schema(implementation = ErrorDTO.class)
                     )
