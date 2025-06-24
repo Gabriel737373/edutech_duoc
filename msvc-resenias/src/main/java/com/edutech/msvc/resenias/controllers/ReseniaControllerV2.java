@@ -93,9 +93,34 @@ public class ReseniaControllerV2 {
         return ResponseEntity.status(HttpStatus.OK).body(entityModel);
     }
 
-    @PostMapping
-    public ResponseEntity<Resenia> save(@RequestBody @Valid Resenia resenia){
-        return ResponseEntity.status(HttpStatus.CREATED).body(this.reseniaService.save(resenia));
+    @PostMapping(produces = MediaTypes.HAL_JSON_VALUE)
+    @Operation(
+            summary = "Endpoint que permite guardar una reseña",
+            description = "Este endpoint manda un body con el formato Reseña.class "+
+                    "y permite la creacion de una reseña"
+    )
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201",
+                    description = "Reseña creado correctamente",
+                    content = @Content(
+                            mediaType = MediaTypes.HAL_JSON_VALUE,
+                            schema = @Schema(implementation = Resenia.class)
+                    ))
+    })
+    @io.swagger.v3.oas.annotations.parameters.RequestBody(
+            required = true,
+            description = "Este debe ser el Json con los datos de una reseña",
+            content = @Content(
+                    mediaType = "application/json",
+                    schema = @Schema(implementation = Resenia.class)
+            )
+    )
+    public ResponseEntity<EntityModel<Resenia>> save(@Valid @io.swagger.v3.oas.annotations.parameters.RequestBody Resenia resenia) {
+        Resenia reseniaNew = this.reseniaService.save(resenia);
+        EntityModel<Resenia> entityModel=this.reseniasModelAssembler.toModel(reseniaNew);
+        return ResponseEntity
+                .created(linkTo(methodOn(ReseniaControllerV2.class).findById(reseniaNew.getIdResenia())).toUri())
+                .body(entityModel);
     }
 
     //Metodo para filtrar reseñias hechas por un alumno
@@ -106,20 +131,46 @@ public class ReseniaControllerV2 {
     }
 
     @DeleteMapping("/{id}")
+    @Operation(
+            summary = "Eliminar una reseña por ID",
+            description = "Este endpoint permite eliminar una reseña existente a través de su ID. " +
+                    "Si la reseña es eliminado exitosamente, retorna un código 204 sin contenido."
+    )
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204", description = "Reseña eliminado correctamente"),
+            @ApiResponse(responseCode = "404", description = "Error - Reseña con ID no encontrado",
+                    content = @Content)
+    })
     public ResponseEntity<Resenia> delete(@PathVariable Long id){
         this.reseniaService.deleteById(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Resenia> update(@PathVariable Long id, @Valid @RequestBody Resenia reseniaNEW){
-        Resenia resenia=new Resenia();
-        resenia.setValoracionResenia(reseniaNEW.getValoracionResenia());
-        resenia.setComentarioResenia(reseniaNEW.getComentarioResenia());
-        resenia.setIdAlumno(reseniaNEW.getIdAlumno());
-        resenia.setIdCurso(reseniaNEW.getIdCurso());
-        Resenia updated=reseniaService.update(id,resenia);
-        return ResponseEntity.status(HttpStatus.OK).body(updated);
+    @PutMapping(value = "/{id}", produces = MediaTypes.HAL_JSON_VALUE)
+    @Operation(
+            summary = "Endpoint que permite actualizar una reseña existente",
+            description = "Este endpoint recibe un JSON con los datos actualizados de una reseña " +
+                    "y retorna la reseña modificado con los enlaces HATEOAS correspondientes."
+    )
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Reseña actualizado correctamente",
+                    content = @Content(mediaType = MediaTypes.HAL_JSON_VALUE,
+                            schema = @Schema(implementation = Resenia.class))),
+            @ApiResponse(responseCode = "404", description = "Error - Reseña con ID no encontrado",
+                    content = @Content)
+    })
+    @io.swagger.v3.oas.annotations.parameters.RequestBody(
+            required = true,
+            description = "Debe contener los campos de la reseña a actualizar",
+            content = @Content(mediaType = "application/json",
+                    schema = @Schema(implementation = Resenia.class))
+    )
+    public ResponseEntity<EntityModel<Resenia>> update(
+            @PathVariable Long id, @Valid @org.springframework.web.bind.annotation.RequestBody Resenia reseniaNEW){
+
+        Resenia updatedResenia = this.reseniaService.update(id, reseniaNEW);
+        EntityModel<Resenia> entityModel=this.reseniasModelAssembler.toModel(updatedResenia);
+        return ResponseEntity.ok(entityModel);
     }
 
 }
