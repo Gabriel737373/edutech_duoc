@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import com.edutech.msvc.alumno.exceptions.AlumnoException;
 
 import java.util.Collections;
 import java.util.Date;
@@ -40,7 +41,6 @@ public class GlobalExceptionHandler {
                 .body(this.createErrorDTO(HttpStatus.BAD_REQUEST, new Date(), errorMap));
     }
 
-
     private ErrorDTO createErrorDTO(HttpStatus status, Date date, Map<String, String> errors) {
         ErrorDTO errorDTO = new ErrorDTO();
         errorDTO.setStatus(status.value());
@@ -48,4 +48,5 @@ public class GlobalExceptionHandler {
         errorDTO.setErrors(errors);
         return errorDTO;
     }
+
 }

@@ -74,7 +74,9 @@ public class AlumnoController {
                     "y permite la creacion de un Alumno"
     )
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Alumno creado correctamente")
+            @ApiResponse(responseCode = "201", description = "Alumno creado correctamente"),
+            @ApiResponse(
+                    responseCode = "409", description = "Este alumno ya existe")
     })
     @io.swagger.v3.oas.annotations.parameters.RequestBody(
             required = true,

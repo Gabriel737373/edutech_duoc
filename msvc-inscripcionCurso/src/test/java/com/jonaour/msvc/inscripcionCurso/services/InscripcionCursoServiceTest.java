@@ -5,7 +5,6 @@ import com.jonaour.msvc.inscripcionCurso.clients.AlumnoClientRest;
 import com.jonaour.msvc.inscripcionCurso.clients.CursoClientRest;
 import com.jonaour.msvc.inscripcionCurso.clients.GerenteCursoClienteRest;
 import com.jonaour.msvc.inscripcionCurso.clients.ProfesorClientRest;
-import com.jonaour.msvc.inscripcionCurso.dtos.InscripcionCursoDTO;
 import com.jonaour.msvc.inscripcionCurso.exceptions.InscripcionCursoException;
 import com.jonaour.msvc.inscripcionCurso.models.Alumno;
 import com.jonaour.msvc.inscripcionCurso.models.Curso;
@@ -61,47 +60,10 @@ public class InscripcionCursoServiceTest {
     private List<InscripcionCurso> inscripcionCursos = new ArrayList<>();
 
 
-    //Test para uno de cada uno
-    /*
-    @BeforeEach
-    public void setUp() {
-        alumnoTest = new Alumno(
-                1L,
-                "José Naour",
-                "jo.naour@duocuc.cl"
-        );
-        cursoTest = new Curso(
-                1L,
-                "Python",
-                "Aprende python desde 0",
-                15000
-        );
-        gerenteCursoTest = new GerenteCurso(
-                1L,
-                "Darwin Nuñez"
-        );
-        profesorTest = new Profesor(
-                1L,
-                "Cesar",
-                "Carrasco",
-                "ce.carrasco@profesor.duocuc.cl"
-        );
-        inscripcionCursoTest = new InscripcionCurso(
-                1L,
-                LocalDate.now(),
-                18000,
-                1L,
-                1L,
-                1L,
-                1L
-        );
-    }
-    */
-
     @BeforeEach
     public void setUp() {
         Faker faker = new Faker(Locale.of("es", "CL"));
-        for (int i = 0; i < 20; i++) {
+        for (int i = 0; i < 100; i++) {
             InscripcionCurso inscripcionCurso = new InscripcionCurso();
             inscripcionCurso.setIdInscripcionCurso((long) i);
             inscripcionCurso.setFechaInscripcion(LocalDate.now());
@@ -112,6 +74,15 @@ public class InscripcionCursoServiceTest {
             inscripcionCurso.setIdCurso((long) faker.number().numberBetween(1,20));
             this.inscripcionCursos.add(inscripcionCurso);
         }
+        this.inscripcionCursoTest = new InscripcionCurso(
+                1L,
+                LocalDate.now(),
+                18000,
+                1L,
+                1L,
+                1L,
+                1L
+        );
     }
 
     @Test
@@ -140,7 +111,7 @@ public class InscripcionCursoServiceTest {
     public void shouldFindAllInscripcionCurso() {
         this.inscripcionCursos.add(this.inscripcionCursoTest);
         when(inscripcionCursoRepository.findAll()).thenReturn(this.inscripcionCursos);
-        List<InscripcionCurso> result=inscripcionCursoService.findAll(); //verificar DTO
+        List<InscripcionCurso> result=inscripcionCursoService.findAll();
 
         assertThat(result).hasSize(101);
         assertThat(result).contains(this.inscripcionCursoTest); //verificar DTO
@@ -160,13 +131,69 @@ public class InscripcionCursoServiceTest {
     @Test
     @DisplayName("Debe retornar una exception cuando una inscripcion curso ID no exista")
     public void shouldReturnAnExceptionInFindInscripcionCursoById() {
-        Long idInexistente=999L;
+        Long idInexistente=99L;
         when(inscripcionCursoRepository.findById(idInexistente)).thenReturn(Optional.empty());
         assertThatThrownBy(() ->{
             inscripcionCursoService.findById(idInexistente);
         }).isInstanceOf(InscripcionCursoException.class)
-                .hasMessageContaining("La inscripcion curso con ID "+idInexistente+" no existe");
+                .hasMessageContaining("La inscripcion con ID: "+idInexistente+" no existen en la base de datos");
         verify(inscripcionCursoRepository,times(1)).findById(idInexistente);
     }
+
+    @Test
+    @DisplayName("Debe guardar una nueva Inscripcion curso")
+    public void shouldSaveInscripcionCurso() {
+        when(inscripcionCursoRepository.save(any(InscripcionCurso.class))).thenReturn(this.inscripcionCursoTest);
+        InscripcionCurso result = inscripcionCursoService.save(this.inscripcionCursoTest);
+        assertThat(result).isNotNull();
+        assertThat(result).isEqualTo(this.inscripcionCursoTest);
+        verify(inscripcionCursoRepository, times(1)).save(any(InscripcionCurso.class));
+    }
+
+    @Test
+    @DisplayName("Debe actualizar una inscripcion curso")
+    public void shouldUpdateInscripcionCurso() {
+        Long idInscripcion = 1L;
+
+        InscripcionCurso inscripcionCursoExistente = new InscripcionCurso(
+                1L,
+                LocalDate.now(),
+                18000,
+                1L,
+                1L,
+                1L,
+                1L
+        );
+        InscripcionCurso inscripcionCursoActualizado = new InscripcionCurso(
+                1L,
+                LocalDate.now(),
+                40000,
+                1L,
+                1L,
+                1L,
+                1L
+        );
+
+        when(inscripcionCursoRepository.findById(idInscripcion)).thenReturn(Optional.of(inscripcionCursoExistente));
+        when(inscripcionCursoRepository.save(any(InscripcionCurso.class))).thenReturn(inscripcionCursoActualizado);
+
+        InscripcionCurso result = inscripcionCursoService.update(idInscripcion, inscripcionCursoActualizado);
+
+        assertThat(result.getCostoInscripcion()).isEqualTo(40000);
+
+        verify(inscripcionCursoRepository, times(1)).findById(idInscripcion);
+        verify(inscripcionCursoRepository, times(1)).save(any(InscripcionCurso.class));
+    }
+
+    @Test
+    @DisplayName("Debe eliminar una inscripcion curso por ID")
+    public void shouldDeleteInscripcionCursoById() {
+        Long idInscripcion = 1L;
+        doNothing().when(inscripcionCursoRepository).deleteById(idInscripcion);
+        inscripcionCursoService.deleteById(idInscripcion);
+
+        verify(inscripcionCursoRepository, times(1)).deleteById(idInscripcion);
+    }
+
 
 }

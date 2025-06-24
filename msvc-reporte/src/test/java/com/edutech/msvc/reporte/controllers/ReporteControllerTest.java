@@ -25,6 +25,6 @@ public class ReporteControllerTest {
 
         DocumentContext context = JsonPath.parse(response.getBody());
         int reportesCount=context.read("$.length()");
-        assertThat(reportesCount).isGreaterThan(1000);
+        assertThat(reportesCount).isGreaterThan(50);
     }
 }

@@ -1,5 +1,6 @@
 package com.edutech.msvc.reporte.services;
 
+import com.edutech.msvc.reporte.clients.GerenteCursoClientRest;
 import com.edutech.msvc.reporte.exceptions.ReporteException;
 import com.edutech.msvc.reporte.models.entities.Reporte;
 import com.edutech.msvc.reporte.repositories.ReporteRepository;
@@ -23,6 +24,9 @@ public class ReporteServiceTest {
 
     @Mock
     private ReporteRepository reporteRepository;
+
+    @Mock
+    private GerenteCursoClientRest gerenteCursoClientRest;
 
     @InjectMocks
     private ReporteServiceImpl reporteService;
@@ -83,12 +87,12 @@ public class ReporteServiceTest {
     @Test
     @DisplayName("Debe retornar una exception cuando un report por ID no exista")
     public void shouldNotfindReporteById() {
-        Long idInexistente=999L;
+        Long idInexistente=51L;
         when(reporteRepository.findById(idInexistente)).thenReturn(Optional.empty());
         assertThatThrownBy(()->{
             reporteService.findById(idInexistente);
         }).isInstanceOf(ReporteException.class)
-                .hasMessageContaining("El reporte con id "+idInexistente+" no existe");
+                .hasMessageContaining("El reporte con id "+idInexistente+" no se encuentra en la base de datos");
         verify(reporteRepository, times(1)).findById(idInexistente);
     }
 
@@ -100,5 +104,35 @@ public class ReporteServiceTest {
         assertThat(result).isNotNull();
         assertThat(result).isEqualTo(this.reportePrueba);
         verify(reporteRepository, times(1)).save(any(Reporte.class));
+    }
+
+    @Test
+    @DisplayName("Debe actualizar un reporte existente")
+    public void shouldUpdateReporte() {
+        Long idReporte= 1L;
+
+        Reporte reporteExistente = new Reporte(idReporte, "Todo malo", "Pendiente",  1L);
+        Reporte reporteActualizado = new Reporte(idReporte, "Todo bueno", "Completado", 1L);
+
+        when(reporteRepository.findById(idReporte)).thenReturn(Optional.of(reporteExistente));
+        when(reporteRepository.save(any(Reporte.class))).thenReturn(reporteActualizado);
+
+        Reporte result = reporteService.update(idReporte, reporteActualizado);
+
+        assertThat(result.getDescripcion()).isEqualTo("Todo bueno");
+        assertThat(result.getEstado()).isEqualTo("Completado");
+
+        verify(reporteRepository, times(1)).findById(idReporte);
+        verify(reporteRepository, times(1)).save(any(Reporte.class));
+    }
+
+    @Test
+    @DisplayName("Debe eliminar un reporte por ID")
+    public void shouldDeleteReporteById() {
+        Long idReporte = 1L;
+        doNothing().when(reporteRepository).deleteById(idReporte);
+        reporteService.deleteById(idReporte);
+
+        verify(reporteRepository, times(1)).deleteById(idReporte);
     }
 }

@@ -92,15 +92,13 @@ public class InscripcionCursoServiceImpl implements InscripcionCursoService{
         return this.inscripcionCursoRepository.findByIdGerenteCurso(gerenteCursoId);
     }
 
-    /*
+
     @Override
     public List<InscripcionCurso> findAll(){
         return this.inscripcionCursoRepository.findAll();
     }
-    */
 
-
-
+    /*
     @Override
     public List<InscripcionCursoDTO> findAll() {
         return this.inscripcionCursoRepository.findAll().stream().map(inscripcionCurso -> {
@@ -161,11 +159,14 @@ public class InscripcionCursoServiceImpl implements InscripcionCursoService{
 
         }).toList();
     }
+     */
 
     @Override
     public void deleteById(Long id) {
         inscripcionCursoRepository.deleteById(id);
     }
+
+
 
 
 

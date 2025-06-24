@@ -106,6 +106,13 @@ public class AlumnoControllerV2 {
                                 mediaType = MediaTypes.HAL_JSON_VALUE,
                                 schema =  @Schema(implementation = Alumno.class)
                         )
+            ),
+            @ApiResponse(
+                    responseCode = "409",
+                    description = "Este alumno ya existe",
+                    content = @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = ErrorDTO.class)
+                    )
             )
     })
     @io.swagger.v3.oas.annotations.parameters.RequestBody(
@@ -135,7 +142,14 @@ public class AlumnoControllerV2 {
                     content = @Content(mediaType = MediaTypes.HAL_JSON_VALUE,
                             schema = @Schema(implementation = Alumno.class))),
             @ApiResponse(responseCode = "404", description = "Error - Alumno con ID no encontrado",
-                    content = @Content)
+                    content = @Content),
+            @ApiResponse(
+                    responseCode = "409",
+                    description = "El usuario ya existe",
+                    content = @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = ErrorDTO.class)
+                    )
+            )
     })
     @io.swagger.v3.oas.annotations.parameters.RequestBody(
             required = true,
@@ -167,7 +181,6 @@ public class AlumnoControllerV2 {
         this.alumnoService.deleteById(id);
         return ResponseEntity.noContent().build();
     }
-
 
 
 }
