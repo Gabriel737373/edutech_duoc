@@ -8,6 +8,8 @@ import com.edutech.msvc.resenias.models.entities.Resenia;
 import com.edutech.msvc.resenias.repositories.ReseniaRepository;
 import com.jonaour.msvc.inscripcionCurso.exceptions.InscripcionCursoException;
 import com.jonaour.msvc.inscripcionCurso.models.entities.InscripcionCurso;
+import net.datafaker.Faker;
+import org.aspectj.lang.annotation.Before;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -17,9 +19,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -38,16 +38,21 @@ public class ReseniasServiceTest {
     private ReseniaRepository reseniaRepository;
 
     @InjectMocks
-    private ReseniaService reseniaService;
+    private ReseniaServiceImpl reseniaService;
 
     private Resenia reseniaPrueba;
 
     private List<Resenia> resenias = new ArrayList<Resenia>();
 
+    private static final String[] COMENTARIOS={"Muy bueno","Muy malo"};
+    private static final int[] VALORACIONES={1,2,3,4,5};
+    private static final Random random=new Random();
+
     private Alumno alumnoTest;
     private Curso cursoTest;
     private Resenia reseniaTest;
 
+    /*
     @BeforeEach
     public void setUp() {
         alumnoTest = new Alumno(
@@ -72,6 +77,35 @@ public class ReseniasServiceTest {
         );
     }
 
+     */
+
+
+    @BeforeEach
+    public void setUp(){
+        Faker faker = new Faker(Locale.of("es","CL"));
+        for (int i=0; i<100; i++){
+            Resenia resenia = new Resenia();
+            resenia.setIdResenia((long) i);
+
+            int valoraciones=VALORACIONES[random.nextInt(VALORACIONES.length)];
+            resenia.setValoracionResenia(valoraciones);
+
+            String comentarios=COMENTARIOS[random.nextInt(COMENTARIOS.length)];
+            resenia.setComentarioResenia(comentarios);
+
+            long idAlumno= (long) faker.number().numberBetween(1,20);
+            resenia.setIdAlumno(idAlumno);
+
+            long idCurso= (long) faker.number().numberBetween(1,20);
+            resenia.setIdCurso(idCurso);
+
+            this.resenias.add(resenia);
+        }
+        this.reseniaPrueba = new Resenia(
+                1L,"Muy bueno",4,1L,1L
+        );
+    }
+
     @Test
     @DisplayName("Debe listar todas las reseñas")
     public void shouldFindAllResenias() {
@@ -87,7 +121,7 @@ public class ReseniasServiceTest {
     @Test
     @DisplayName("Debe encontrar una reseña por ID")
     public void shouldFindReseniaById() {
-        when(reseniaRepository.findById(1L)).thenReturn(Optional.of(this.reseniaTest));
+        when(reseniaRepository.findById(1L)).thenReturn(Optional.ofNullable(this.reseniaPrueba));
         Resenia result = reseniaService.findById(1L);
         assertThat(result).isNotNull();
         assertThat(result).isEqualTo(this.reseniaTest);
