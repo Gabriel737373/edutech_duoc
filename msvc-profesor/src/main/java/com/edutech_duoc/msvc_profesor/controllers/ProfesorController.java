@@ -25,7 +25,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/profesores")
 @Validated
-@Tag(name = "Evaluaciones", description = "esta seccion tiene los crud de profesor")
+@Tag(name = "Profesores V1", description = "esta seccion tiene los crud de profesor")
 public class ProfesorController {
     @Autowired
     private ProfesorService profesorService;

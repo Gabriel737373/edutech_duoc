@@ -27,7 +27,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 @RestController
 @RequestMapping("/api/v2/profesores")
 @Validated
-@Tag(name = "Profesores", description = "Esta seccion contiene los cruds de los profesores")
+@Tag(name = "Profesores V2", description = "Esta seccion contiene los cruds de los profesores")
 public class ProfesorControllerV2 {
 
     @Autowired
