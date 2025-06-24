@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
+import java.util.Random;
 
 @Profile("dev")
 @Component
@@ -21,24 +22,24 @@ public class LoadDataBase {
     private ReseniaRepository reseniaRepository;
 
     private static final Logger logger = LoggerFactory.getLogger(LoadDataBase.class);
+    private static final String[] COMENTARIOS={"Muy bueno","Muy malo"};
+    private static final int[] VALORACIONES={1,2,3,4,5};
+    private static final Random random=new Random();
 
     public void run(String... args) throws Exception {
         Faker faker = new Faker(Locale.of("es","CL"));
         if(reseniaRepository.count()==0){
-
-            List<String> nombresDeComentario = Arrays.asList(
-                    "Muy Malo",
-                    "Malo",
-                    "Bueno",
-                    "Muy bueno",
-                    "Excelente"
-            );
-
-            for(int i=0;i<1000;i++){
+            for(int i=0;i<100;i++){
                 Resenia resenia = new Resenia();
-                String comentario = nombresDeComentario.get(faker.random().nextInt(nombresDeComentario.size()));
-                resenia.setComentarioResenia(comentario);
-                resenia.setValoracionResenia(faker.number().numberBetween(1, 10));
+                resenia.setValoracionResenia(VALORACIONES[random.nextInt(VALORACIONES.length)]);
+                resenia.setComentarioResenia(COMENTARIOS[random.nextInt(COMENTARIOS.length)]);
+
+                long idAlumno= (long) faker.number().numberBetween(1,20);
+                resenia.setIdAlumno(idAlumno);
+
+                long idCurso= (long) faker.number().numberBetween(1,20);
+                resenia.setIdCurso(idCurso);
+
                 resenia = reseniaRepository.save(resenia);
                 logger.info("La reseña creada es: {}",resenia.toString());
 
