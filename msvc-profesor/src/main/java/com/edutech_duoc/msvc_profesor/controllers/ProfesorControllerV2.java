@@ -105,7 +105,9 @@ public class ProfesorControllerV2 {
 
     //GUARDAR
     @PostMapping(produces = MediaTypes.HAL_JSON_VALUE)
-    @Operation(summary = "Guarda a un nuevo profesor", description = "Guarda a un nuevo profesor con toda su informacion correspondiente")
+    @Operation(
+            summary = "Guarda a un nuevo profesor",
+            description = "Guarda a un nuevo profesor con toda su informacion correspondiente")
     @ApiResponses(value = {
             @ApiResponse(
                     responseCode = "201",
@@ -121,27 +123,36 @@ public class ProfesorControllerV2 {
                     content = @Content(mediaType = "application/json",
                             schema = @Schema(implementation = ErrorDTO.class)
                     )
+            ),
+            @ApiResponse(
+                    responseCode = "409",
+                    description = "El usuario ya existe",
+                    content = @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = ErrorDTO.class)
+                    )
             )
     } )
     @io.swagger.v3.oas.annotations.parameters.RequestBody(
             required = true,
-            description = "Json con los daros del profesor",
+            description = "Json con los datos del profesor",
             content = @Content(
                     mediaType = "application/json",
                     schema = @Schema(implementation = Profesor.class)
             )
     )
     public ResponseEntity<EntityModel<Profesor>> create (@Valid @RequestBody Profesor profesor){
-        Profesor profesor1 = this.profesorService.save(profesor);
-        EntityModel<Profesor> profesorEntityModel =this.profesorModelAssembler.toModel(profesor1);
+        Profesor profesorNew = this.profesorService.save(profesor);
+        EntityModel<Profesor> entityModel =this.profesorModelAssembler.toModel(profesorNew);
         return ResponseEntity
-                .created(linkTo(methodOn(ProfesorControllerV2.class).findById(profesor1.getIdProfesor())).toUri())
-                .body(profesorEntityModel);
+                .created(linkTo(methodOn(ProfesorControllerV2.class).findById(profesorNew.getIdProfesor())).toUri())
+                .body(entityModel);
     }
 
     //ACTUALIZAR
     @PutMapping(value = "/{id}", produces = MediaTypes.HAL_JSON_VALUE)
-    @Operation(summary = "Actualiza a un profesor", description = "Acctualiza la informacion de un profesor mediante el id de este mismo")
+    @Operation(
+            summary = "Actualiza a un profesor",
+            description = "Acctualiza la informacion de un profesor mediante el id de este mismo")
     @ApiResponses(value = {
             @ApiResponse(
                     responseCode = "200",
@@ -157,7 +168,8 @@ public class ProfesorControllerV2 {
                     content = @Content(mediaType = "application/json",
                             schema = @Schema(implementation = ErrorDTO.class)
                     )
-            )
+            ),
+
     } )
     public ResponseEntity<EntityModel<Profesor>> update(
             @PathVariable Long id,
@@ -169,7 +181,9 @@ public class ProfesorControllerV2 {
 
     //ELIMINAR
     @DeleteMapping("/{id}")
-    @Operation(summary = "Elimina a un profesor", description = "Mediante el id elimina a un profesor de la base de datos")
+    @Operation(
+            summary = "Elimina a un profesor",
+            description = "Mediante el id elimina a un profesor de la base de datos")
     @ApiResponses(value = {
             @ApiResponse(
                     responseCode = "204",
@@ -180,14 +194,8 @@ public class ProfesorControllerV2 {
                     responseCode = "404",
                     description = "Hubo algun error en el prompt a la hora de ingresarlo",
                     content = @Content
-            ),
-            @ApiResponse(
-                    responseCode = "409",
-                    description = "El usuario ya existe",
-                    content = @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = ErrorDTO.class)
-                    )
             )
+
     } )
     public ResponseEntity<Profesor> delete(@PathVariable Long id){
         this.profesorService.deleteById(id);
