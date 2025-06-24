@@ -119,13 +119,13 @@ public class ReseniasServiceTest {
     }
 
     @Test
-    @DisplayName("Debe encontrar una reseña por ID")
+    @DisplayName("Debe encontrar un reporte por ID")
     public void shouldFindReseniaById() {
-        when(reseniaRepository.findById(1L)).thenReturn(Optional.ofNullable(this.reseniaPrueba));
-        Resenia result = reseniaService.findById(1L);
+        when(reseniaRepository.findById(1L)).thenReturn(Optional.of(this.reseniaPrueba));
+        Resenia result=reseniaService.findById(1L);
         assertThat(result).isNotNull();
-        assertThat(result).isEqualTo(this.reseniaTest);
-        verify(reseniaRepository,times(1)).findById(1L);
+        assertThat(result).isEqualTo(this.reseniaPrueba);
+        verify(reseniaRepository, times(1)).findById(1L);
     }
 
     @Test
