@@ -29,10 +29,16 @@ public class GerenteCursoServiceImpl implements GerenteCursoService {
     }
 
     // Metodo para guardar gerentes
+
     @Override
     public GerenteCurso save(GerenteCurso gerenteCurso) {
+        if (gerenteCurso.getIdGerenteCurso() != null &&
+                gerenteRepository.existsById(gerenteCurso.getIdGerenteCurso())) {
+            throw new GerenteCursoException("Ya existe un gerente con el ID: " + gerenteCurso.getIdGerenteCurso());
+        }
         return this.gerenteRepository.save(gerenteCurso);
     }
+
 
     // Metodo para eliminar gerentes por id
     @Override
