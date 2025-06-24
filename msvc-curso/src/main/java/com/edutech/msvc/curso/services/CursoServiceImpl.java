@@ -29,6 +29,12 @@ public class CursoServiceImpl implements CursoService{
     // Guardar curso
     @Override
     public Curso save(Curso curso) {
+        if (curso.getIdCurso() != null &&
+                cursoRepository.existsById(curso.getIdCurso())) {
+            throw new CursoException("Ya existe un curso con el ID: " + curso.getIdCurso());
+        }
+
+        curso.setIdCurso(null);
         return this.cursoRepository.save(curso);
     }
 

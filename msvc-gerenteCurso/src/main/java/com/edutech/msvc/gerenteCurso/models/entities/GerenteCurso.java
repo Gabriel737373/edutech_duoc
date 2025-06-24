@@ -16,7 +16,7 @@ public class GerenteCurso {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_gerente_curso")
     @Schema(description = "Primary key Gerente de Cursos", example = "1")
-    public Long idGerenteCurso;
+    private Long idGerenteCurso;
 
     @Column(nullable = false)
     @NotBlank(message = "El campo nombre gerente no puede ser vacio")

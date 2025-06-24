@@ -36,6 +36,7 @@ public class GerenteCursoServiceImpl implements GerenteCursoService {
                 gerenteRepository.existsById(gerenteCurso.getIdGerenteCurso())) {
             throw new GerenteCursoException("Ya existe un gerente con el ID: " + gerenteCurso.getIdGerenteCurso());
         }
+        gerenteCurso.setIdGerenteCurso(null);
         return this.gerenteRepository.save(gerenteCurso);
     }
 

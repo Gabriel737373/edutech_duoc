@@ -36,6 +36,7 @@ public class AlumnoServiceImpl implements AlumnoService{
             throw new AlumnoException("Alumno existente");
         }
 
+        alumno.setIdAlumno(null);
         return alumnoRepository.save(alumno);
     }
 
