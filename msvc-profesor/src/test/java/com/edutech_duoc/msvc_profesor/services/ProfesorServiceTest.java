@@ -72,7 +72,7 @@ public class ProfesorServiceTest {
 
         verify(profesorRepository, times( 1)).findById(1L);
     }
-
+    //Excepcion en caso de que el profesor no exista
     @Test
     @DisplayName("Debe de retornar la excepcion en caso de que el profesor no exista")
     public void shoulNotFindProfesorById(){
@@ -85,9 +85,7 @@ public class ProfesorServiceTest {
         verify(profesorRepository, times(1)).findById(idInexistente);
 
     }
-
-
-
+    //Guardar nuevos profesores test
     @Test
     @DisplayName("Debe guardar los nuevos profesores")
     public void shoulSaveProfesor(){
@@ -97,7 +95,7 @@ public class ProfesorServiceTest {
         assertThat(result).isEqualTo(this.profesorPrueba);
         verify(profesorRepository, times(1)).save(any(Profesor.class));
     }
-
+    //Actualizar por id test
     @Test
     @DisplayName("Debe actualizar a un profesor ya existente")
     public void shouldUpdateProfesor(){
@@ -119,7 +117,7 @@ public class ProfesorServiceTest {
         verify(profesorRepository, times(1)).save(any(Profesor.class));
 
     }
-
+    //Eliminar por id test
     @Test
     @DisplayName("Diebe eliminar a un Profesor por ID")
     public void shouldDeleteProfesorById(){

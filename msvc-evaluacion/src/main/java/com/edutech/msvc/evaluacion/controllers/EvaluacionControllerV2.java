@@ -28,7 +28,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 @RestController
 @RequestMapping("/api/v2/evaluaciones")
 @Validated
-@Tag(name = "Evaluaciones", description = "Esta seccion contiene los cruds de las evaluaciones")
+@Tag(name = "Evaluaciones V2", description = "Esta seccion contiene los cruds de las evaluaciones")
 public class EvaluacionControllerV2 {
 
     @Autowired
@@ -130,7 +130,7 @@ public class EvaluacionControllerV2 {
     } )
     @io.swagger.v3.oas.annotations.parameters.RequestBody(
             required = true,
-            description = "Json con los daros del profesor",
+            description = "Json con los datos del profesor",
             content = @Content(
                     mediaType = "application/json",
                     schema = @Schema(implementation = Evaluacion.class)
@@ -138,10 +138,10 @@ public class EvaluacionControllerV2 {
     )
     public ResponseEntity<EntityModel<Evaluacion>> create (@Valid @RequestBody Evaluacion evaluacion){
         Evaluacion evaluacion1= this.evaluacionService.save(evaluacion);
-        EntityModel<Evaluacion> evaluacionEntityModel=this.evaluacionModelAssembler.toModel(evaluacion1);
+        EntityModel<Evaluacion> entityModel =this.evaluacionModelAssembler.toModel(evaluacion1);
         return ResponseEntity
                 .created(linkTo(methodOn(EvaluacionControllerV2.class).findById(evaluacion1.getIdEvaluacion())).toUri())
-                .body(evaluacionEntityModel);
+                .body(entityModel);
     }
 
     //ACTUALIZAR EVALUACION POR ID

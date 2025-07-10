@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class EvaluacionServiceImpl implements EvaluacionService{
@@ -28,7 +29,15 @@ public class EvaluacionServiceImpl implements EvaluacionService{
 
     @Override
     public Evaluacion save(Evaluacion evaluacion) {
+
+        Optional<Evaluacion> evaluacion1 =evaluacionRepository.findById(evaluacion.getIdEvaluacion());
+
+        if (evaluacion1.isPresent()){
+            throw new EvaluacionException("Evaluacion existente");
+        }
+
         return this.evaluacionRepository.save(evaluacion);
+
     }
 
     @Override
